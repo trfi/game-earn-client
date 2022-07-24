@@ -1,0 +1,19 @@
+.textBanner {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  transform: translate(-50%, -50%);
+  color: #ffd900;
+  text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  font-family: 'Playball', cursive;
+  z-index: 20;
+}
+
+@media screen and (max-width: 600px) {
+  .textBanner {
+    left: 50%;
+    bottom: -50px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "node server.js",
+    "dev:next": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "build:tar": "tar -cvf ./deploy.tar --exclude=./deploy.tar --exclude=./.git --exclude=./.next --exclude=.env.local --exclude=./node_modules ./*",
+    "deploy": "caprover deploy --default",
+    "deploy:option": "caprover deploy -a game-earn-client -t ./deploy.tar",
+    "build:deploy": "npm-run-all build:tar deploy"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@headlessui/react": "^1.6.1",
+    "axios": "^0.27.2",
+    "daisyui": "^2.14.3",
+    "next": "latest",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hot-toast": "^2.2.0",
+    "react-slick": "^0.29.0",
+    "recoil": "^0.7.3-alpha.2",
+    "slick-carousel": "^1.8.1",
+    "swr": "^1.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.4",
+    "@types/react": "17.0.38",
+    "@types/react-slick": "^0.23.8",
+    "autoprefixer": "^10.4.0",
+    "express": "^4.18.1",
+    "http-proxy-middleware": "^2.0.6",
+    "postcss": "^8.4.5",
+    "prettier": "^2.5.1",
+    "prettier-plugin-tailwindcss": "^0.1.1",
+    "tailwindcss": "^3.0.7",
+    "typescript": "4.5.4"
+  }
+}
