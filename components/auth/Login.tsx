@@ -47,7 +47,7 @@ const Login = () => {
             required
             autoComplete="username"
             className="input input-bordered w-full text-center text-base"
-            placeholder="Tên tài khoản"
+            placeholder="Username"
           />
           <input
             name="password"
@@ -56,7 +56,7 @@ const Login = () => {
             required
             autoComplete="current-password"
             className="input input-bordered w-full text-center text-base"
-            placeholder="Mật khẩu"
+            placeholder="Password"
           />
         </div>
 
@@ -67,7 +67,7 @@ const Login = () => {
             disabled={isLoading}
             className="btn w-full rounded-2xl border border-transparent bg-gray-500 px-4 py-3 text-base font-medium text-white hover:bg-gray-400 disabled:bg-[#cfd088]"
           >
-            Đăng nhập
+            Login
           </button>
         </div>
       </form>

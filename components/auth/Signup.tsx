@@ -58,7 +58,7 @@ const Signup = () => {
             required
             autoComplete="username"
             className="input input-bordered w-full text-center text-base"
-            placeholder="Tên tài khoản"
+            placeholder="Username"
           />
           <input
             name="email"
@@ -75,7 +75,7 @@ const Signup = () => {
             required
             autoComplete="current-password"
             className="input input-bordered w-full text-center text-base"
-            placeholder="Mật khẩu"
+            placeholder="Password"
           />
           <input
             name="confirmPassword"
@@ -84,7 +84,7 @@ const Signup = () => {
             required
             autoComplete="current-password"
             className="input input-bordered w-full text-center text-base"
-            placeholder="Nhập lại mật khẩu"
+            placeholder="Confirm password"
           />
           <input
             name="referral"
@@ -93,7 +93,7 @@ const Signup = () => {
             defaultValue={refId}
             autoComplete="referral"
             className="input input-bordered w-full text-center text-base"
-            placeholder="Mã giới thiệu"
+            placeholder="Referral code"
           />
         </div>
 
@@ -104,7 +104,7 @@ const Signup = () => {
             disabled={isLoading}
             className="btn w-full rounded-2xl border border-transparent bg-gray-500 px-4 py-3 text-base font-medium text-white hover:bg-gray-400 disabled:bg-[#cfd088]"
           >
-            Đăng ký
+            Sign up
           </button>
         </div>
       </form>

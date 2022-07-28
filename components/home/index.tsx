@@ -1,3 +1,7 @@
 export * from './Banner'
 export * from './Header'
 export * from './Footer'
+export * from './Welcome'
+export * from './About'
+export * from './Stats'
+export * from './Games'

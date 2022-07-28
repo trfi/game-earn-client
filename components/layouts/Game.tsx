@@ -5,7 +5,6 @@ import { Auth } from '../common'
 import { useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks'
-import { Head } from 'next/document'
 
 export function GameLayout({ children }: LayoutProps) {
   const [mute, setMute] = useState(false)
@@ -18,10 +17,6 @@ export function GameLayout({ children }: LayoutProps) {
   return (
     <Auth>
       <>
-        <Head>
-          <title>Play Game</title>
-          <script async src="https://cdn.now4real.com/now4real.js"></script>
-        </Head>
         <div className="min-h-screen">
           <div className="h-26 fixed flex w-full items-center justify-between bg-dark py-4 px-8">
             <Link href="/user">

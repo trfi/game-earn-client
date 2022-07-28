@@ -1,12 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { Banner, Header, Footer } from '@/components/home'
+import { Welcome, About, Header, Footer, Stats, Games } from '@/components/home'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { modalAuthState } from '@/atoms'
 import { useAuth } from '@/hooks'
-import Welcome from '@/components/home/Welcome'
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -16,7 +15,7 @@ const Home: NextPage = () => {
   }, [router])
 
   return (
-    <div className='max-w-screen-2xl mx-auto'>
+    <div className='mx-auto'>
       <Head>
         <title>Game For Earn</title>
         <meta name="description" content="GAME FOR EARN - PLAY AND EARN 2022" />
@@ -52,7 +51,9 @@ const Home: NextPage = () => {
       <Header></Header>
       <main className="pt-6">
         <Welcome />
-
+        <Games />
+        <About />
+        <Stats />
         <Footer></Footer>
       </main>
     </div>

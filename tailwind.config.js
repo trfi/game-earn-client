@@ -32,6 +32,13 @@ module.exports = {
     darkTheme: 'dark',
     themes: [
       {
+        light: {
+          'base-100': '#f5faff',
+          'primary': '#008aa6',
+          'secondary': '#ff7a1f',
+        }
+      },
+      {
         pro: {
           primary: '#245076',
           secondary: '#D926A9',

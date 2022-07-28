@@ -10,8 +10,6 @@ const AuthModal = () => {
   const [state, setState] = useState('login')
   const [open, setOpen] = useRecoilState(modalAuthState)
 
-  console.log(state)
-
   return (
     <>
       <Transition appear show={open} as={Fragment}>
@@ -51,9 +49,9 @@ const AuthModal = () => {
                     className="my-6 text-center text-xl font-medium leading-6"
                   >
                     {state == 'register'
-                      ? 'Đăng ký'
+                      ? 'Sign up'
                       : state == 'login'
-                      ? 'Đăng nhập'
+                      ? 'Login'
                       : 'Quên mật khẩu'}
                   </Dialog.Title>
                   {state == 'register' ? (
@@ -66,12 +64,12 @@ const AuthModal = () => {
 
                   {state == 'register' ? (
                     <div className="my-6 px-4 text-right text-sm text-slate-200">
-                      <span className="font-normal">Đã có tài khoản?</span>{' '}
+                      <span className="font-normal">Have an account?</span>{' '}
                       <button
                         onClick={() => setState('login')}
                         className="font-semibold"
                       >
-                        Đăng nhập
+                        Login
                       </button>
                     </div>
                   ) : state == 'login' ? (
@@ -80,15 +78,15 @@ const AuthModal = () => {
                         onClick={() => setState('forget-pass')}
                         className="mb-3 font-semibold"
                       >
-                        Quên mật khẩu?
+                        Forget password?
                       </button>
                       <div>
-                        <span className="font-normal">Chưa có tài khoản?</span>{' '}
+                        <span className="font-normal">Don't have an account yet?</span>{' '}
                         <button
                           onClick={() => setState('register')}
                           className="font-semibold"
                         >
-                          Đăng ký
+                          Sign up
                         </button>
                       </div>
                     </div>
@@ -99,7 +97,7 @@ const AuthModal = () => {
                           onClick={() => setState('login')}
                           className="font-semibold"
                         >
-                          Đăng nhập
+                          Login
                         </button>
                       </div>
                     </div>
