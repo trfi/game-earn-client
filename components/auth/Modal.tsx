@@ -37,16 +37,16 @@ const AuthModal = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-slate-800 text-left align-middle text-slate-200 shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-primary text-left align-middle shadow-xl transition-all">
                   <button
-                    className="absolute top-2 right-2 rounded-md px-2 text-2xl font-bold text-gray-500 hover:bg-slate-700"
+                    className="absolute top-2 right-2 rounded-md px-2 text-2xl font-bold text-primary-content"
                     onClick={() => setOpen(false)}
                   >
                     ×
                   </button>
                   <Dialog.Title
                     as="h3"
-                    className="my-6 text-center text-xl font-medium leading-6"
+                    className="my-6 text-center text-xl font-medium leading-6 text-primary-content"
                   >
                     {state == 'register'
                       ? 'Sign up'
@@ -63,7 +63,7 @@ const AuthModal = () => {
                   )}
 
                   {state == 'register' ? (
-                    <div className="my-6 px-4 text-right text-sm text-slate-200">
+                    <div className="my-6 px-4 text-right text-sm text-primary-content">
                       <span className="font-normal">Have an account?</span>{' '}
                       <button
                         onClick={() => setState('login')}
@@ -73,7 +73,7 @@ const AuthModal = () => {
                       </button>
                     </div>
                   ) : state == 'login' ? (
-                    <div className="my-6 px-4 text-center text-sm text-slate-200">
+                    <div className="my-6 px-4 text-center text-sm text-primary-content">
                       <button
                         onClick={() => setState('forget-pass')}
                         className="mb-3 font-semibold"
@@ -91,7 +91,7 @@ const AuthModal = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="my-6 px-4 text-center text-sm text-slate-200">
+                    <div className="my-6 px-4 text-center text-sm text-primary-content">
                       <div>
                         <button
                           onClick={() => setState('login')}

@@ -10,7 +10,7 @@ export const Header = () => {
 
   return (
     <header className="fixed w-full bg-white shadow-md">
-      <div className="mx-auto flex h-20 max-w-screen-2xl items-center justify-between pl-3 lg:pl-0">
+      <div className="mx-auto flex h-20 max-w-screen-2xl items-center justify-between px-4 ">
         <div className="cursor-pointer w-36">
           <img src="/logo.png" alt="logo" />
         </div>
@@ -33,11 +33,11 @@ export const Header = () => {
           </li>
         </ul>
 
-        <div className="space-x-3 lg:hidden">
+        <div className="space-x-3 lg:hidden hover:text-primary cursor-pointer font-semibold">
           {user ? (
             <Link href="/dashboard">Dashboard</Link>
           ) : (
-            <button onClick={() => setOpen(true)}>Login</button>
+            <a onClick={() => setOpen(true)}>Login</a>
           )}
         </div>
       </div>

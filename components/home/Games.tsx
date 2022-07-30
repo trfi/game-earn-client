@@ -14,9 +14,9 @@ export const Games = () => {
     },
   ]
   return (
-    <div className="mx-auto flex gap-6 max-w-screen-2xl justify-center py-48">
+    <div className="mx-auto flex flex-col lg:flex-row gap-6 max-w-screen-2xl justify-center py-24 lg:py-48 px-4">
       {games.map((game, idx) => (
-        <div className="border-gray-200 shadow-md hover:border-purple-600 border-2 rounded-xl p-6 max-w-[350px]">
+        <div key={idx} className="border-gray-200 shadow-md hover:border-primary border-2 rounded-xl p-6 max-w-[350px]">
           <div>
             <img className="aspect-video object-cover" src={game.image} alt="game" />
           </div>

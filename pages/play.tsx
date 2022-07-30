@@ -22,7 +22,7 @@ const Play: NextPageWithLayout = () => {
       <div className="flex gap-8 py-4">
         {games.map((game, idx) => (
           <Link key={idx} href={game.link}>
-            <div className="card w-96 cursor-pointer bg-neutral text-neutral-content hover:border-y-4 border-y-yellow-400">
+            <div className="card w-96 cursor-pointer bg-neutral hover:border-y-4 border-y-yellow-400">
               <div className="card-body items-center py-16 text-center">
                 <h2 className="card-title">{game.name}</h2>
               </div>

@@ -23,7 +23,7 @@ const Game: NextPageWithLayout = () => {
         {games.map((game, idx) => (
           <Link href={game.link}>
             <div
-              className="card w-96 bg-neutral text-neutral-content cursor-pointer"
+              className="card w-96 bg-neutral cursor-pointer"
               key={idx}
             >
               <div className="card-body items-center text-center py-16">

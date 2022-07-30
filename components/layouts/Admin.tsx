@@ -66,7 +66,7 @@ export function AdminLayout({ children }: LayoutProps) {
           <ul className="menu overflow-y-auto bg-base-300 p-4 text-base-content w-64 lg:w-72">
             <div className="mb-1 flex items-center p-4 font-bold">
               <div className="avatar placeholder online mr-4">
-                <div className="w-10 rounded-full bg-neutral-focus text-neutral-content">
+                <div className="w-10 rounded-full bg-neutral-focus">
                   <span className="text-xl uppercase">
                     {user?.username.charAt(0)}
                   </span>

@@ -43,7 +43,7 @@ const Rooms = () => {
 
   return (
     <div className="w-full overflow-x-auto">
-      <table className="table w-full">
+      <table className="table table-compact lg:table-normal w-full">
         <thead>
           <tr>
             <th>ID</th>

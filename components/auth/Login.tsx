@@ -39,7 +39,7 @@ const Login = () => {
   return (
     <>
       <Error errors={errors}></Error>
-      <form onSubmit={handlerLogin} className="bg-gray-700 px-6 py-8">
+      <form onSubmit={handlerLogin} className="bg-base-100 px-6 py-8">
         <div className="space-y-4 px-6">
           <input
             name="username"
@@ -65,7 +65,7 @@ const Login = () => {
             type="submit"
             name="btnLogin"
             disabled={isLoading}
-            className="btn w-full rounded-2xl border border-transparent bg-gray-500 px-4 py-3 text-base font-medium text-white hover:bg-gray-400 disabled:bg-[#cfd088]"
+            className="btn btn-secondary w-full"
           >
             Login
           </button>

@@ -266,7 +266,7 @@ const TreeList = () => {
         <div className="max-w-full grow basis-0 text-center">
           <div className="mt-4">
             <div className="mt-3 flex flex-wrap justify-center">
-              <div className="col-lg-8 rounded-xl bg-gray-700 py-6 text-left text-white">
+              <div className="col-lg-8 rounded-xl bg-neutral py-6 text-left">
                 {data?.length ? (
                   <Tree data={data} />
                 ) : (

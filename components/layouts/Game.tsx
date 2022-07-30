@@ -18,30 +18,30 @@ export function GameLayout({ children }: LayoutProps) {
     <Auth>
       <>
         <div className="min-h-screen">
-          <div className="h-26 fixed flex w-full items-center justify-between bg-dark py-4 px-8">
+          <div className="h-26 fixed flex w-full items-center justify-between bg-neutral py-4 px-4 lg:px-8">
             <Link href="/user">
               <div className="relative">
                 <div className="avatar placeholder z-10 cursor-pointer">
-                  <div className="w-16 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 bg-neutral">
-                    <span className="text-4xl font-bold uppercase">
+                  <div className="w-14 lg:w-16 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 bg-neutral">
+                    <span className="text-xl lg:text-4xl font-bold uppercase">
                       {user?.username.charAt(0)}
                     </span>
                   </div>
                 </div>
-                <div className="absolute top-0 left-12 min-w-[150px] cursor-pointer bg-primary px-8 py-1 text-center font-semibold hover:text-white">
+                <div className="absolute top-0 left-6 lg:left-12 min-w-[150px] cursor-pointer bg-primary px-8 py-1 text-center text-primary-content font-semibold hover:text-white">
                   {user?.username}
                 </div>
-                <code className="absolute bottom-2 left-20 min-w-max font-semibold">
+                <code className="absolute bottom-0 lg:bottom-2 left-16 lg:left-20 min-w-max font-semibold">
                   500 Token
                 </code>
               </div>
             </Link>
-            <div className="font-airstrike text-lg">GameForEarn</div>
-            <div className="cursor-pointer" onClick={handleVolume}>
+            <div className="font-airstrike text-xl hidden lg:block">GameForEarn</div>
+            <div className="cursor-pointer text-xl lg:text-3xl" onClick={handleVolume}>
               {mute ? (
-                <FontAwesomeIcon size="2x" icon={faVolumeMute} />
+                <FontAwesomeIcon icon={faVolumeMute} />
               ) : (
-                <FontAwesomeIcon size="2x" icon={faVolumeUp} />
+                <FontAwesomeIcon icon={faVolumeUp} />
               )}
             </div>
           </div>

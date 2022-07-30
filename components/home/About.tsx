@@ -1,9 +1,9 @@
 export const About = () => {
   return (
-    <div className="bg-[#eefcff]">
+    <div className="bg-[#eefcff] mx-4 lg:mx-0">
       <div
         id="about"
-        className="max-w-screen-2xl mx-auto py-48 text-center"
+        className="max-w-screen-2xl mx-auto py-20 lg:py-48 text-center"
       >
         <span className="text-lg font-semibold text-primary">
           Knowledge, Innovation, Passion
@@ -11,7 +11,7 @@ export const About = () => {
         <h1 className="title mt-8 text-5xl font-bold">
           We Known What You Need, And Who We Are
         </h1>
-        <p className="mx-auto mt-8 max-w-2xl text-lg">
+        <p className="mx-auto mt-8 max-w-2xl text-base lg:text-lg">
           A fair and transparent gaming platform, absolutely no technical
           interference, only a fierce battle between players, 24/7 online
           support. Fast crypto payment and commission withdrawl when you wnat.

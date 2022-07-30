@@ -42,7 +42,7 @@ export function DashboardLayout({ children }: LayoutProps) {
       <div className="drawer drawer-mobile">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col items-start justify-start">
-          <div className="navbar w-full bg-base-300">
+          <div className="navbar w-full bg-neutral">
             <div className="flex-none lg:hidden">
               <label htmlFor="my-drawer-2" className="btn btn-ghost btn-square">
                 <svg
@@ -75,11 +75,11 @@ export function DashboardLayout({ children }: LayoutProps) {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu w-64 overflow-y-auto bg-base-300 p-4 text-base-content lg:w-72">
+          <ul className="menu w-64 overflow-y-auto bg-neutral p-4 text-base-content lg:w-72">
             <Link href="/user">
               <div className="mb-1 flex cursor-pointer items-center p-4 font-bold">
                 <div className="avatar placeholder online mr-4">
-                  <div className="w-10 rounded-full bg-neutral-focus text-neutral-content hover:text-white">
+                  <div className="w-10 rounded-full bg-neutral-focus hover:text-white">
                     <span className="text-xl uppercase">
                       {user?.username.charAt(0)}
                     </span>

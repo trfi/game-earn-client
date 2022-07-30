@@ -11,16 +11,15 @@ const Room: NextPageWithLayout = () => {
 
   return (
     <div>
-      <div className="flex justify-between">
-        <div className="w-[18%] space-y-4">
+      <div className="flex flex-col lg:flex-row justify-between gap-4">
+        <div className="w-full lg:w-[18%] space-y-2 lg:space-y-4">
           <Link href="/bitcoin">
             <FontAwesomeIcon
-              className="cursor-pointer hover:text-white"
-              size="3x"
+              className="cursor-pointer text-3xl lg:text-5xl"
               icon={faCircleChevronLeft}
             />
           </Link>
-          <ul>
+          <ul className='text-sm lg:text-base'>
             <li>Room {rid}</li>
             <li>Thời gian dự đoán: 3m</li>
             <li>Thời gian còn lại: 30s</li>
@@ -45,7 +44,7 @@ const Room: NextPageWithLayout = () => {
             <div className="div2">Cryptocurrency Prices</div>
           </div>
         </div>
-        <div className="w-[18%] border-2 border-primary rounded-xl p-4">
+        <div className="w-full lg:w-[18%] border-2 border-primary rounded-xl p-4">
           <h2 className="text-center text-lg font-semibold">
             Tổng giải thưởng
           </h2>
@@ -86,7 +85,7 @@ const Room: NextPageWithLayout = () => {
           </div>
         </div>
       </div>
-      <div className="mt-10 flex justify-center space-x-4">
+      <div className="mt-10 mb-20 flex justify-center space-x-4">
         <input
           type="text"
           placeholder="Price"
