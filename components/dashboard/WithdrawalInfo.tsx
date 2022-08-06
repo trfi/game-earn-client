@@ -26,10 +26,10 @@ const WithdrawlalInfo = () => {
       className="mx-auto flex w-full md:w-1/2 flex-col justify-between rounded-2xl bg-neutral p-8 text-center"
     >
       <div>
-        <h3 className="mb-4 text-xl font-semibold">Thông tin thanh toán</h3>
+        <h3 className="mb-4 text-xl font-semibold">Payment Info</h3>
         <div className="form-control w-full">
           <label className="label mt-2">
-            <span className="label-text">Địa chỉ ví</span>
+            <span className="label-text">Wallet Address</span>
           </label>
           <input
             name="payAddress"
@@ -38,7 +38,7 @@ const WithdrawlalInfo = () => {
             className="input input-bordered input-sm input-primary w-full"
           />
           <label className="label mt-2">
-            <span className="label-text">Mạng</span>
+            <span className="label-text">Network</span>
           </label>
           <select
             name="payNetwork"
@@ -49,7 +49,7 @@ const WithdrawlalInfo = () => {
           </select>
         </div>
       </div>
-      <button className="btn btn-sm btn-accent mt-8 px-10 mx-auto">Cập nhật</button>
+      <button className="btn btn-sm btn-accent mt-8 px-10 mx-auto">Update</button>
     </form>
   )
 }

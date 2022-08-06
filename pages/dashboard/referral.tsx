@@ -22,9 +22,9 @@ const Referral: NextPageWithLayout = () => {
   return (
     <div className="w-full">
       <div className="my-8 flex flex-col items-center">
-        <h2 className="text-xl font-semibold">Liên kết giới thiệu:</h2> <br />
+        <h2 className="text-xl font-semibold">My referral link:</h2> <br />
         <div className="form-control w-full max-w-xl">
-          <div className="input-group">
+          <div className="input-group text-white">
             <input
               type="text"
               value={refLink}

@@ -24,7 +24,7 @@ const ContactInfo = () => {
       className="mx-auto flex w-full md:w-1/2 flex-col justify-between rounded-2xl bg-neutral p-8 text-center"
     >
       <div>
-        <h3 className="mb-4 text-xl font-semibold">Thông tin liên hệ</h3>
+        <h3 className="mb-4 text-xl font-semibold">Contact Info</h3>
         <div className="form-control w-full">
           <label className="label mt-2">
             <span className="label-text">Email</span>
@@ -37,7 +37,7 @@ const ContactInfo = () => {
           />
         </div>
       </div>
-      <button className="btn btn-sm btn-accent mt-8 px-10 mx-auto">Cập nhật</button>
+      <button className="btn btn-sm btn-accent mt-8 px-10 mx-auto">Update</button>
     </form>
   )
 }

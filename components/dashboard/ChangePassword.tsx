@@ -21,11 +21,11 @@ const ChangePassword = () => {
       onSubmit={handlerChangePassword}
       className="mx-auto flex w-full flex-col justify-between rounded-2xl bg-neutral p-8 text-center"
     >
-      <h3 className="mb-4 text-xl font-semibold">Đổi Mật Khẩu</h3>
+      <h3 className="mb-4 text-xl font-semibold">Change Password</h3>
       <div className="flex flex-col lg:flex-row gap-6">
         <div className='w-full'>
           <label className="label mt-2">
-            <span className="label-text">Mật khẩu cũ</span>
+            <span className="label-text">Old Password</span>
           </label>
           <input
             name="oldPassword"
@@ -36,7 +36,7 @@ const ChangePassword = () => {
         </div>
         <div className='w-full'>
           <label className="label mt-2">
-            <span className="label-text">Mật khẩu mới</span>
+            <span className="label-text">New Password</span>
           </label>
           <input
             name="newPassword"
@@ -47,7 +47,7 @@ const ChangePassword = () => {
         </div>
         <div className='w-full'>
           <label className="label mt-2">
-            <span className="label-text">Nhập lại mật khẩu mới</span>
+            <span className="label-text">Confirm New Password</span>
           </label>
           <input
             name="confirmNewPassword"

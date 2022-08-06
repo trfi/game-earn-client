@@ -13,27 +13,27 @@ export function DashboardLayout({ children }: LayoutProps) {
   const menuItems = [
     {
       href: '/dashboard',
-      title: 'Bảng điều khiển',
+      title: 'Dashboard',
     },
     {
       href: '/dashboard/referral',
-      title: 'Giới thiệu kiếm tiền',
+      title: 'Referral Program',
     },
     {
       href: '/dashboard/wallet',
-      title: 'Ví tiền',
+      title: 'My wallet',
     },
     {
       href: '/dashboard/commission-history',
-      title: 'Lịch sử hoa hồng',
+      title: 'Commission History',
     },
     {
       href: '/dashboard/deposit-history',
-      title: 'Lịch sử nạp',
+      title: 'Deposit History',
     },
     {
       href: '/dashboard/exchange-history',
-      title: 'Lịch sử mua gói',
+      title: 'Commissoin Exchange',
     },
   ]
 
