@@ -25,7 +25,7 @@ const Room: NextPageWithLayout = () => {
   const { data: roomData, error, mutate } = useSWR('/rooms/' + rid)
   const [isJoining, setJoining] = useState(false)
   const { setInRoom, isInRoom } = useContext(gameContext)
-  const { user } = useAuth()
+  const { user, mutate: mutateUser } = useAuth()
 
   async function handleSubmit(e: any) {
     e.preventDefault()
@@ -67,12 +67,11 @@ const Room: NextPageWithLayout = () => {
 
   const handleGameResutl = () => {
     if (socketService.socket)
-      gameService.onOrderResult(socketService.socket, ({result, amount}) => {
-        console.log('orderResult', amount);
-        if (result === 1)
-          toast.success(`WIN +${amount}`)
-        else if (result === 2)
-          toast.error(`LOSE -${amount}`)
+      gameService.onOrderResult(socketService.socket, ({ result, amount }) => {
+        console.log('orderResult', amount)
+        if (result === 1) toast.success(`WIN +${amount}`, { duration: 5000 })
+        else if (result === 2) toast.error(`LOSE -${amount}`, { duration: 5000 })
+        mutateUser()
       })
   }
 

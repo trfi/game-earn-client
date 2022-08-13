@@ -32,7 +32,7 @@ export function GameLayout({ children }: LayoutProps) {
                   {user?.username}
                 </div>
                 <code className="absolute bottom-0 lg:bottom-2 left-16 lg:left-20 min-w-max font-semibold">
-                  500 Token
+                  {user?.balance} Token
                 </code>
               </div>
             </Link>
