@@ -46,6 +46,7 @@ const Login = () => {
             type="text"
             required
             autoComplete="username"
+            autoFocus
             className="input input-bordered w-full text-center text-base"
             placeholder="Username"
           />

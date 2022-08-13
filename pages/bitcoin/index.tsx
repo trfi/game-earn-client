@@ -16,12 +16,12 @@ const BitcoinGame: NextPageWithLayout = () => {
         BITCOIN PRICE PREDICTION
       </h1>
       <div className="flex h-full flex-col items-center justify-center">
-        <label
+        {/* <label
           htmlFor="create-room-modal"
           className="modal-button btn btn-primary mb-6"
         >
           Create room
-        </label>
+        </label> */}
         <div className="mx-auto w-full max-w-screen-lg rounded-xl border-4 border-primary p-6">
           <h4 className="mb-6 text-center font-bold">Room List</h4>
           <Rooms />

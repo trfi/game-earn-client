@@ -68,7 +68,7 @@ export function AdminLayout({ children }: LayoutProps) {
               <div className="avatar placeholder online mr-4">
                 <div className="w-10 rounded-full bg-neutral-focus">
                   <span className="text-xl uppercase">
-                    {user?.username.charAt(0)}
+                    {user?.username?.charAt(0)}
                   </span>
                 </div>
               </div>

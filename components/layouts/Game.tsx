@@ -24,7 +24,7 @@ export function GameLayout({ children }: LayoutProps) {
                 <div className="avatar placeholder z-10 cursor-pointer">
                   <div className="w-14 lg:w-16 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 bg-neutral">
                     <span className="text-xl lg:text-4xl font-bold uppercase">
-                      {user?.username.charAt(0)}
+                      {user?.username?.charAt(0)}
                     </span>
                   </div>
                 </div>

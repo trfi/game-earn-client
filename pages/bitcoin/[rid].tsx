@@ -5,44 +5,110 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
-import { AdvancedRealTimeChart, CopyrightStyles } from 'react-ts-tradingview-widgets'
+import {
+  AdvancedRealTimeChart,
+  CopyrightStyles,
+} from 'react-ts-tradingview-widgets'
+import gameService from '@/services/gameService'
+import socketService from '@/services/socketService'
+import React, { useContext, useEffect, useState } from 'react'
+import gameContext from '@/contexts/gameContext'
+import Countdown from '@/components/game/Countdown'
+import useSWR from 'swr'
+import axiosClient from '@/api/axios-client'
+import ListOrder from '@/components/game/ListOrder'
+import { useAuth } from '@/hooks'
 
 const Room: NextPageWithLayout = () => {
   const router = useRouter()
   const { rid } = router.query
+  const { data: roomData, error, mutate } = useSWR('/rooms/' + rid)
+  const [isJoining, setJoining] = useState(false)
+  const { setInRoom, isInRoom } = useContext(gameContext)
+  const { user } = useAuth()
 
-  function handleSubmit(e: any) {
+  async function handleSubmit(e: any) {
     e.preventDefault()
-    e.target.amount.value = ''
-    toast.success('Order sucess')
+    const data = {
+      body: { price: Number(e.target.price.value), amount: roomData.amount },
+      userId: user.id,
+    }
+    if (!socketService.socket) return
+    try {
+      // await axiosClient.post('/orders', data)
+      gameService.newOrder(socketService.socket, data)
+      e.target.price.value = ''
+      toast.success('Order Sucess')
+    } catch (err: any) {
+      toast.error(err.message)
+    }
   }
+
+  const leaveRoom = async (e: React.FormEvent) => {
+    const socket = socketService.socket
+
+    if (!rid || rid === '' || !socket) return
+
+    setJoining(true)
+
+    const leaved = await gameService
+      .leaveGameRoom(socket, rid as string)
+      .catch((err) => {
+        alert(err)
+      })
+
+    if (leaved) {
+      setInRoom(false)
+      router.push('/bitcoin')
+    }
+
+    setJoining(false)
+  }
+
+  const handleGameResutl = () => {
+    if (socketService.socket)
+      gameService.onOrderResult(socketService.socket, ({result, amount}) => {
+        console.log('orderResult', amount);
+        if (result === 1)
+          toast.success(`WIN +${amount}`)
+        else if (result === 2)
+          toast.error(`LOSE -${amount}`)
+      })
+  }
+
+  useEffect(() => {
+    handleGameResutl()
+  }, [])
 
   const chartStyles: CopyrightStyles = {
     parent: {
       display: 'none',
-    }
-  };
+    },
+  }
 
   return (
     <div>
       <div className="flex flex-col justify-between gap-4 lg:flex-row">
         <div className="w-full space-y-2 lg:w-[18%] lg:space-y-4">
-          <Link href="/bitcoin">
-            <FontAwesomeIcon
-              className="cursor-pointer text-3xl lg:text-5xl"
-              icon={faCircleChevronLeft}
-            />
-          </Link>
-          <ul className="text-sm lg:text-base">
+          <FontAwesomeIcon
+            onClick={leaveRoom}
+            className="cursor-pointer text-3xl lg:text-5xl"
+            icon={faCircleChevronLeft}
+          />
+          <ul className="text-sm font-semibold lg:text-base">
             <li>Room {rid}</li>
-            <li>Prediction time: 3m</li>
-            <li>Remaining time: 30s</li>
-            <li>Participation amount: 100 token</li>
-            <li>Players: 5/6</li>
+            <li>Prediction time: {roomData?.time}m</li>
+            <li>
+              Remaining time: <Countdown />
+            </li>
+            <li>Participation amount: {roomData?.amount} token</li>
+            {/* <li>
+              Players: {roomData?.participants}/{roomData?.maxPlayer}
+            </li> */}
           </ul>
         </div>
         <div className="w-full max-w-screen-lg">
-          <div id="chart" className="h-[600px]">
+          <div id="chart" className="h-[60vh] rounded-lg">
             <AdvancedRealTimeChart
               autosize
               hide_side_toolbar
@@ -59,55 +125,17 @@ const Room: NextPageWithLayout = () => {
               symbol="BINANCE:BTCUSDT"
               copyrightStyles={chartStyles}
             ></AdvancedRealTimeChart>
-            {/* <iframe src='https://trading-view.s.gameforearn.com/' width="100%" height={620}></iframe> */}
           </div>
         </div>
-        <div className="w-full rounded-xl border-2 border-primary p-4 lg:w-[18%]">
-          <h2 className="text-center text-lg font-semibold">Total Reward</h2>
-          <hr className="my-3" />
-          <div className="">
-            <h4 className="mb-2 text-center font-semibold">Orders</h4>
-            <table className="table-compact table w-full">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Time</th>
-                  <th>Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th>02333</th>
-                  <td>11:15:01</td>
-                  <td>20100</td>
-                </tr>
-                <tr>
-                  <th>02334</th>
-                  <td>11:15:15</td>
-                  <td>50000</td>
-                </tr>
-                <tr>
-                  <th>02335</th>
-                  <td>11:15:25</td>
-                  <td>1000</td>
-                </tr>
-                <tr>
-                  <th>02337</th>
-                  <td>11:15:25</td>
-                  <td>1050</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <ListOrder />
       </div>
-      <div className="mt-10 mb-20 flex justify-center space-x-4">
+      <div className="mt-10 mb-20 flex justify-center">
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Price"
-            name="amount"
-            className="input input-bordered"
+            name="price"
+            className="input input-bordered mr-2"
           />
           <button className="btn btn-accent">Ready</button>
         </form>

@@ -6,10 +6,13 @@ import axiosClient from '@/api/axios-client'
 import { AppPropsWithLayout } from '../models'
 import { Toaster } from 'react-hot-toast'
 import { config, library } from '@fortawesome/fontawesome-svg-core'
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { io } from "socket.io-client";
+import { useEffect } from 'react'
+import socketService from '@/services/socketService'
 config.autoAddCss = false
 
 library.add(fas)
@@ -17,22 +20,39 @@ library.add(fas)
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout ?? EmptyLayout
 
+  const connectSocket = async () => {
+    const socket = await socketService
+      .connect("http://localhost:4000")
+      .catch((err) => {
+        console.log("Error: ", err);
+      });
+  };
+
+  useEffect(() => {
+    connectSocket();
+  }, []);
+
   return (
     <RecoilRoot>
-      <SWRConfig value={{ fetcher: (url) => axiosClient.get(url), shouldRetryOnError: false, dedupingInterval: 60 * 60 * 1000 }}>
-					<Layout>
-						<Component {...pageProps} />
-            <Toaster
-              toastOptions={{
-                className: '',
-                style: {
-                  background: '#374151',
-                  color: '#fff',
-                },
-              }}
-            />
-					</Layout>
-				</SWRConfig>
+      <SWRConfig
+        value={{
+          fetcher: (url) => axiosClient.get(url),
+          shouldRetryOnError: false,
+        }}
+      >
+        <Layout>
+          <Component {...pageProps} />
+          <Toaster
+            toastOptions={{
+              className: '',
+              style: {
+                background: '#374151',
+                color: '#fff',
+              },
+            }}
+          />
+        </Layout>
+      </SWRConfig>
     </RecoilRoot>
   )
 }
