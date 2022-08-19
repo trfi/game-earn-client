@@ -39,6 +39,7 @@ class GameService {
   }
 
   public async onOrderResult(socket: Socket, listiner: (message: any) => void) {
+    console.log('on_order_result');
     socket.on('on_order_result', (message) => listiner(message))
   }
 

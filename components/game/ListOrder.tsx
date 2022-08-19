@@ -1,21 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import useSWR from 'swr'
 import gameService from '@/services/gameService'
 import socketService from '@/services/socketService'
-import axiosClient from '@/api/axios-client'
 
 const ListOrder = () => {
   const { data: orders, mutate } = useSWR('/orders')
-  // const [orders, setOrders] = useState<any>([])
-
-  // const fetchData = async () => {
-  //   try {
-  //     const data: any = await axiosClient('/orders')
-  //     setOrders(data)
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
 
   const handleNewOrder = () => {
     if (socketService.socket)
@@ -44,8 +33,8 @@ const ListOrder = () => {
           </thead>
           <tbody>
             {orders?.map((order: any) => (
-              <tr key={order?.id}>
-                <th>{order?.id}</th>
+              <tr key={order?._id}>
+                <th>{order?.user.substring(0, 8)}</th>
                 <td>
                   {new Date(order?.createdAt).toLocaleString().split(',')[0]}
                 </td>

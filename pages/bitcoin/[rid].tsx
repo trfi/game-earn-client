@@ -17,6 +17,8 @@ import useSWR from 'swr'
 import axiosClient from '@/api/axios-client'
 import ListOrder from '@/components/game/ListOrder'
 import { useAuth } from '@/hooks'
+import { DefaultEventsMap } from '@socket.io/component-emitter'
+import { Socket } from 'socket.io-client'
 
 const Room: NextPageWithLayout = () => {
   const router = useRouter()
@@ -94,6 +96,8 @@ const Room: NextPageWithLayout = () => {
     setInRoom(true)
 
     setJoining(false)
+    
+    handleGameResutl(socket)
   }
 
   function showResult() {
@@ -102,32 +106,33 @@ const Room: NextPageWithLayout = () => {
       x.className = 'show'
       setTimeout(function () {
         x.className = x.className.replace('show', '')
-      }, 5000)
+      }, 3000)
     }
   }
 
-  const handleGameResutl = () => {
-    if (socketService.socket) {
-      gameService.onOrderResult(socketService.socket, ({ result, amount }) => {
-        console.log('orderResult', result, amount)
-        if (result === 1) {
-          // toast.success(`WIN +${amount}`, { duration: 5000 })
-          showResult()
-        } else if (result === 2)
-          toast.error(`LOSE -${amount}`, { duration: 5000 })
-        mutateBalance()
-        mutateOrders()
-      })
-      gameService.onCountUser(socketService.socket, (count) => {
-        setParticipants(count)
-      })
-    }
+  const handleGameResutl = (socket: Socket<DefaultEventsMap, DefaultEventsMap>) => {
+    gameService.onOrderResult(socket, ({ result, amount }) => {
+      console.log('orderResult', result, amount)
+      if (result === 1) {
+        // toast.success(`WIN +${amount}`, { duration: 5000 })
+        showResult()
+      } else if (result === 2)
+        toast.error(`LOSE -${amount}`, { duration: 5000 })
+      mutateBalance()
+      mutateOrders()
+    })
+    gameService.onCountUser(socket, (count) => {
+      setParticipants(count)
+    })
   }
 
   useEffect(() => {
     joinRoom()
-    handleGameResutl()
-  }, [socketService.socket, rid, user])
+  }, [rid, user])
+
+  // useEffect(() => {
+  //   handleGameResutl()
+  // })
 
   const chartStyles: CopyrightStyles = {
     parent: {
@@ -180,7 +185,7 @@ const Room: NextPageWithLayout = () => {
           <Countdown />
           <form onSubmit={handleOrder}>
             <input
-              type="text"
+              type="number"
               placeholder="Price"
               name="price"
               className="input input-bordered input-sm mr-2 lg:input-md"

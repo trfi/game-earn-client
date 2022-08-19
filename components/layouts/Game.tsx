@@ -40,7 +40,7 @@ export function GameLayout({ children }: LayoutProps) {
             </Link>
             {/* Logo */}
             <div className="absolute left-1/2 w-36 -translate-x-1/2 transform cursor-pointer">
-              <Link href="/play">
+              <Link href="/dashboard">
                 <img width="150px" src="/logo.png" alt="logo" />
               </Link>
             </div>

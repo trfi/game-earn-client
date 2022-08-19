@@ -22,7 +22,7 @@ const Dashboard: NextPageWithLayout = () => {
             <FontAwesomeIcon size='lg' icon={faHandHoldingUsd} />
           </div>
           <div className="stat-title">Gói ref hiện tại</div>
-          <div className="stat-value">{user.currentPack ? user.currentPack + '$' : '--'}</div>
+          <div className="stat-value">{user?.currentPack ? user.currentPack + '$' : '--'}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
 

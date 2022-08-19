@@ -17,7 +17,7 @@ const DealerDeposit: NextPageWithLayout = () => {
 
   let toastPaying = ''
 
-  const discount = knbPackages && knbPackages[user.currentPack]?.dealerDiscount.percent
+  const discount = knbPackages && knbPackages[user?.currentPack]?.dealerDiscount.percent
 
   const dealerHistory = useSWR('/history/dealer')
   const userBalance = useSWR('/wallet/balance')
@@ -76,7 +76,7 @@ const DealerDeposit: NextPageWithLayout = () => {
               </h3>
               <div className="card-actions items-end justify-between">
                 <code className="w-full text-md text-red-300 lg:w-[70%]">
-                  Được chiết khấu {user.currentPack == 2000 && pack >= 10000 ? 10 : discount}%
+                  Được chiết khấu {user?.currentPack == 2000 && pack >= 10000 ? 10 : discount}%
                 </code>
                 <button
                   disabled={isDeposting}
