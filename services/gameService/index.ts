@@ -4,15 +4,23 @@ import { IOrder, IPlayMatrix, IStartGame } from '@/components/gamet'
 class GameService {
   public async joinGameRoom(socket: Socket, roomId: string): Promise<boolean> {
     return new Promise((rs, rj) => {
-      socket.emit('join_game', { roomId })
+      socket.emit('join_room', { roomId })
       socket.on('room_joined', () => rs(true))
+      socket.on('room_join_error', ({ error }) => rj(error))
+    })
+  }
+
+  public async joinGameRooms(socket: Socket, rooms: string[]): Promise<number> {
+    return new Promise((rs, rj) => {
+      socket.emit('join_rooms', { rooms })
+      socket.on('room_joined', (numUser: number) => rs(numUser))
       socket.on('room_join_error', ({ error }) => rj(error))
     })
   }
 
   public async leaveGameRoom(socket: Socket, roomId: string): Promise<boolean> {
     return new Promise((rs, rj) => {
-      socket.emit('leave_game', { roomId })
+      socket.emit('leave_room', { roomId })
       socket.on('room_leaved', () => rs(true))
     })
   }
@@ -32,6 +40,10 @@ class GameService {
 
   public async onOrderResult(socket: Socket, listiner: (message: any) => void) {
     socket.on('on_order_result', (message) => listiner(message))
+  }
+
+  public async onCountUser(socket: Socket, listiner: (message: any) => void) {
+    socket.on('on_count_user', (message) => listiner(message))
   }
 
   public async onGameUpdate(

@@ -10,7 +10,6 @@ interface Props {
 const JoinRoomModal = () => {
   const [roomId] = useRecoilState(joinRoomIdState)
   const router = useRouter()
-  console.log('room', roomId)
 
   function handleSubmit() {}
 

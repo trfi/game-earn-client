@@ -1,7 +1,3 @@
-import gameContext from '@/contexts/gameContext'
-import gameService from '@/services/gameService'
-import socketService from '@/services/socketService'
-import { useContext, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faUnlock, faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
@@ -22,40 +18,6 @@ interface RoomProps {
 const Room = ({ room }: RoomProps) => {
   const router = useRouter()
   const [_, setRoomId] = useRecoilState(joinRoomIdState)
-  const [roomName, setRoomName] = useState('')
-  const [isJoining, setJoining] = useState(false)
-
-  const { setInRoom, isInRoom } = useContext(gameContext)
-
-  // const handleRoomNameChange = (e: React.ChangeEvent<any>) => {
-  //   const value = e.target.value;
-  //   setRoomName(value);
-  // };
-
-  const joinRoom = async (roomName: string) => {
-    console.log(roomName)
-
-    const socket = socketService.socket
-
-    if (!roomName || roomName.trim() === '' || !socket) return
-
-    setJoining(true)
-
-    const joined = await gameService
-      .joinGameRoom(socket, roomName)
-      .catch((err) => {
-        alert(err)
-      })
-
-    console.log(joined)
-
-    if (joined) {
-      setInRoom(true)
-      router.push(`${router.pathname}/${room.id}`)
-    }
-
-    setJoining(false)
-  }
 
   return (
     <tr>
@@ -76,12 +38,9 @@ const Room = ({ room }: RoomProps) => {
             Join
           </label>
         ) : (
-          <button
-            onClick={() => joinRoom(room.id)}
-            className="btn btn-accent w-full px-6"
-          >
-            Join
-          </button>
+          <Link href={`${router.pathname}/${room.id}`}>
+            <button className="btn btn-accent w-full px-6">Join</button>
+          </Link>
         )}
       </td>
     </tr>

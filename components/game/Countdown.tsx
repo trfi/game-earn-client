@@ -9,7 +9,7 @@ const Countdown = () => {
     const interval = setInterval(async () => {
       const { offset } = await getServerDate()
       const clientDate = new Date()
-      setServerDate(60 - new Date(clientDate.getTime() + offset).getSeconds())
+      setServerDate(59 - new Date(clientDate.getTime() + offset).getSeconds())
     }, 1000)
     return () => {
       clearInterval(interval)
@@ -17,6 +17,7 @@ const Countdown = () => {
     }
   }, [])
 
-  return <span className="font-semibold">{String(serverDate)}s</span>
+  return <div className="font-bold px-6 py-1 lg:py-1.5 border-2 border-red-500 text-red-500 text-xl lg:text-2xl rounded-lg">00:{String(serverDate).padStart(2, '0')}</div>
 }
+
 export default Countdown

@@ -1,10 +1,7 @@
 import { GameLayout } from '@/components/layouts/Game'
-import { useAuth } from '@/hooks'
 import { NextPageWithLayout } from '@/models'
-import gameService from '@/services/gameService'
-import socketService from '@/services/socketService'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import toast from 'react-hot-toast'
 
 const Play: NextPageWithLayout = () => {
   const games = [
@@ -14,46 +11,40 @@ const Play: NextPageWithLayout = () => {
     },
     {
       name: 'Gold Price Prediction',
-      link: '/bitcoin',
+      link: '/#',
+      disabled: true,
     },
     {
       name: 'Stock Price Prediction',
-      link: '/bitcoin',
+      link: '/#',
+      disabled: true,
     },
   ]
 
-  const { user } = useAuth()
-
-  const joinRoom = async () => {
-    const socket = socketService.socket
-
-    if (!user || !socket) return
-
-    const joined = await gameService
-      .joinGameRoom(socket, user.id)
-      .catch((err) => {
-        alert(err)
-      })
-
-    console.log('joined', user.username)
+  const handleClick = () => {
+    toast('Comming Soon')
   }
-
-  useEffect(() => {
-    joinRoom()
-  }, [])
 
   return (
     <div className="flex h-[70vh] items-center justify-center">
-      <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 py-4">
-        {games.map((game, idx) => (
-          <Link key={idx} href={game.link}>
-            <div className="card w-64 lg:w-96 cursor-pointer bg-neutral hover:border-y-4 border-y-yellow-400">
-              <div className="card-body items-center py-12 lg:py-16 text-center">
-                <h2 className="card-title">{game.name}</h2>
-              </div>
+      <div className="flex flex-col gap-4 py-4 lg:flex-row lg:gap-8">
+        <Link href="/bitcoin">
+          <div className="card w-64 cursor-pointer border-y-yellow-400 bg-neutral hover:border-y-4 lg:w-96">
+            <div className="card-body items-center py-12 text-center lg:py-16">
+              <h2 className="card-title">Bitcoin Price Prediction</h2>
             </div>
-          </Link>
-        ))}
+          </div>
+        </Link>
+        <div onClick={handleClick} className="card w-64 cursor-pointer border-y-yellow-400 bg-neutral hover:border-y-4 lg:w-96">
+          <div className="card-body items-center py-12 text-center lg:py-16">
+            <h2 className="card-title">Gold Price Prediction</h2>
+          </div>
+        </div>
+        <div onClick={handleClick} className="card w-64 cursor-pointer border-y-yellow-400 bg-neutral hover:border-y-4 lg:w-96">
+          <div className="card-body items-center py-12 text-center lg:py-16">
+            <h2 className="card-title">Stock Price Prediction</h2>
+          </div>
+        </div>
       </div>
     </div>
   )

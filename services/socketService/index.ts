@@ -8,7 +8,7 @@ class SocketService {
     url: string
   ): Promise<Socket<DefaultEventsMap, DefaultEventsMap>> {
     return new Promise((rs, rj) => {
-      this.socket = io(url);
+      this.socket = io(url, { transports: ['websocket'] });
 
       if (!this.socket) return rj();
 
@@ -17,7 +17,7 @@ class SocketService {
       });
 
       this.socket.on("connect_error", (err) => {
-        console.log("Connection error: ", err);
+        console.error(err);
         rj(err);
       });
     });

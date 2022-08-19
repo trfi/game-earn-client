@@ -10,9 +10,10 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import { io } from "socket.io-client";
 import { useEffect } from 'react'
 import socketService from '@/services/socketService'
+import getConfig from 'next/config'
+const { publicRuntimeConfig } = getConfig();
 config.autoAddCss = false
 
 library.add(fas)
@@ -22,7 +23,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   const connectSocket = async () => {
     const socket = await socketService
-      .connect("http://localhost:4000")
+      .connect(publicRuntimeConfig.streamUrl)
       .catch((err) => {
         console.log("Error: ", err);
       });
