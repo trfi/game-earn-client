@@ -1,9 +1,11 @@
 import axiosClient from '@/api/axios-client'
+import { walletTypeState } from '@/atoms'
 import { IRoomData } from '@/pages/bitcoin/[rid]'
 import socketService from '@/services/socketService'
 import { getServerDate } from '@/utils/serverDate.js'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import { useRecoilState } from 'recoil'
 import useSWR from 'swr'
 
 interface Props {
@@ -13,6 +15,7 @@ interface Props {
 const Order = ({ roomData }: Props) => {
   let [serverDate, setServerDate] = useState(0)
   let [isDisableOrder, setIsDisableOrder] = useState(false)
+  const [walletType, setWalletType] = useRecoilState(walletTypeState)
   const { mutate: mutateBalance } = useSWR('/wallet/balance')
 
   async function handleOrder(e: any) {

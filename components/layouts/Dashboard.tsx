@@ -33,7 +33,7 @@ export function DashboardLayout({ children }: LayoutProps) {
     },
     {
       href: '/dashboard/exchange-history',
-      title: 'Commissoin Exchange',
+      title: 'Commission Exchange',
     },
   ]
 

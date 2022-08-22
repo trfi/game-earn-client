@@ -21,9 +21,9 @@ const Room = ({ room }: RoomProps) => {
 
   return (
     <tr>
-      <th>
-        <label>{room.id}</label>
-      </th>
+      <td>
+        <label className='font-semibold text-xs'>{room.id}</label>
+      </td>
       <td>{room.time}m</td>
       <td>{room.participants}</td>
       <td>{room.amount}</td>
@@ -39,7 +39,7 @@ const Room = ({ room }: RoomProps) => {
           </label>
         ) : (
           <Link href={`${router.pathname}/${room.id}`}>
-            <button className="btn btn-accent w-full px-6">Join</button>
+            <button className="btn btn-sm lg:btn-md btn-accent w-full px-6">Join</button>
           </Link>
         )}
       </td>

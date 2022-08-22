@@ -25,35 +25,35 @@ const ChangePassword = () => {
       <div className="flex flex-col lg:flex-row gap-6">
         <div className='w-full'>
           <label className="label mt-2">
-            <span className="label-text">Old Password</span>
+            <span className="label-text text-primary-content">Old Password</span>
           </label>
           <input
             name="oldPassword"
             type="password"
             required
-            className="input input-sm input-bordered input-primary w-full"
+            className="input input-sm input-bordered input-primary w-full text-black"
           />
         </div>
         <div className='w-full'>
           <label className="label mt-2">
-            <span className="label-text">New Password</span>
+            <span className="label-text text-primary-content">New Password</span>
           </label>
           <input
             name="newPassword"
             type="password"
             required
-            className="input input-sm input-bordered input-primary w-full"
+            className="input input-sm input-bordered input-primary w-full text-black"
           />
         </div>
         <div className='w-full'>
           <label className="label mt-2">
-            <span className="label-text">Confirm New Password</span>
+            <span className="label-text text-primary-content">Confirm New Password</span>
           </label>
           <input
             name="confirmNewPassword"
             type="password"
             required
-            className="input input-sm input-bordered input-primary w-full"
+            className="input input-sm input-bordered input-primary w-full text-black"
           />
         </div>
       </div>

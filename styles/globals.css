@@ -21,6 +21,10 @@ h1.title {
   color: #fff;
 }
 
+.table-compact :where(th) {
+  font-size: 0.6rem;
+}
+
 .card {
   overflow: hidden;
   border-radius: var(--rounded-box, 1rem);

@@ -79,22 +79,22 @@ const Wallet: NextPageWithLayout = () => {
 
       <div className="stats stats-vertical bg-primary py-4 text-primary-content lg:stats-horizontal">
         <div className="stat">
-          <div className="stat-title">Ví chính</div>
+          <div className="stat-title">Wallet Balance</div>
           <div className="stat-value mt-3 text-5xl">${balance?.balance}</div>
           <div className="stat-actions mt-8">
             <Link href="/dashboard/deposit-history">
-              <button className="btn btn-sm">Lịch sử nạp</button>
+              <button className="btn btn-sm">Deposit History</button>
             </Link>
           </div>
         </div>
         <div className="stat">
-          <div className="stat-title">Ví hoa hồng</div>
+          <div className="stat-title">Commission Balance</div>
           <div className="stat-value mt-3 text-5xl">
             ${balance?.commissionBalance}
           </div>
           <div className="stat-actions mt-8 flex flex-col gap-2 lg:flex-row">
             <Link href="/dashboard/wallet/withdrawal">
-              <button className="btn btn-sm">Rút tiền</button>
+              <button className="btn btn-sm">Withdrawal</button>
             </Link>
             <label htmlFor="my-modal-4" className="modal-button btn btn-sm">
               Chuyển
@@ -112,7 +112,7 @@ const Wallet: NextPageWithLayout = () => {
                 <button className="btn btn-sm">Nạp tiền</button>
               </Link>
               <label htmlFor="my-modal-2" className="modal-button btn btn-sm">
-                Chuyển
+                Transfer
               </label>
               <Link href="/dashboard/dealer-history">
                 <button className="btn btn-sm">Lịch sử</button>
@@ -126,7 +126,7 @@ const Wallet: NextPageWithLayout = () => {
         <div className="flex w-full flex-col gap-4 lg:flex-row">
           <div className="w-full max-w-xs">
             <label className="label">
-              <span className="label-text">Nhập số tiền. Tối thiểu 50$</span>
+              <span className="label-text">Enter amount. Min 50$</span>
             </label>
             <label className="input-group">
               <input
@@ -144,7 +144,7 @@ const Wallet: NextPageWithLayout = () => {
 
           <div className="w-full max-w-[15rem]">
             <label className="label">
-              <span className="label-text">Chọn token</span>
+              <span className="label-text">Select currency</span>
             </label>
             <select
               name="payCurrency"
@@ -155,7 +155,7 @@ const Wallet: NextPageWithLayout = () => {
             </select>
           </div>
           <button disabled={isDeposting} className="btn btn-accent mt-8 w-36 self-center">
-            Nạp tiền
+            Deposit
           </button>
         </div>
       </form>

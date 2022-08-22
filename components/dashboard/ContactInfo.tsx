@@ -27,13 +27,13 @@ const ContactInfo = () => {
         <h3 className="mb-4 text-xl font-semibold">Contact Info</h3>
         <div className="form-control w-full">
           <label className="label mt-2">
-            <span className="label-text">Email</span>
+            <span className="label-text text-primary-content">Email</span>
           </label>
           <input
             name="email"
             required
             defaultValue={user?.email}
-            className="input input-sm input-bordered input-primary w-full"
+            className="input input-sm input-bordered input-primary w-full text-black"
           />
         </div>
       </div>

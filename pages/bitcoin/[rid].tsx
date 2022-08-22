@@ -33,7 +33,7 @@ const Room: NextPageWithLayout = () => {
   const [isJoining, setJoining] = useState(false)
   const [participants, setParticipants] = useState(1)
   const { setInRoom, isInRoom } = useContext(gameContext)
-  const { mutate: mutateOrders } = useSWR('/orders')
+  const { mutate: mutateOrders } = useSWR(roomData?.id ? '/orders/' + roomData.id: null)
   const { user } = useAuth()
   const { mutate: mutateBalance } = useSWR('/wallet/balance')
 
@@ -124,8 +124,8 @@ const Room: NextPageWithLayout = () => {
   return (
     <div>
       <div className="flex flex-col justify-between gap-4 lg:flex-row">
-        <div className="relative w-full space-y-2 px-2 pt-2 lg:w-[370px] lg:space-y-4">
-          <div className="absolute right-1 -top-10 lg:left-0 lg:top-2">
+        <div className="relative w-full space-y-2 px-2 pt-0 lg:w-[370px] lg:space-y-4 lg:pt-2">
+          <div className="absolute right-0 top-0 lg:left-0 lg:top-2">
             <FontAwesomeIcon
               onClick={leaveRoom}
               className="cursor-pointer text-3xl lg:text-5xl"
@@ -161,8 +161,12 @@ const Room: NextPageWithLayout = () => {
             ></AdvancedRealTimeChart>
           </div>
         </div>
-        {roomData && <Order roomData={roomData} />}
-        <ListOrder />
+        {roomData && (
+          <>
+            <Order roomData={roomData} />
+            <ListOrder roomId={roomData.id} />
+          </>
+        )}
       </div>
 
       <div id="snackbar">

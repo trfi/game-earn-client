@@ -3,8 +3,12 @@ import useSWR from 'swr'
 import gameService from '@/services/gameService'
 import socketService from '@/services/socketService'
 
-const ListOrder = () => {
-  const { data: orders, mutate } = useSWR('/orders')
+interface Props {
+  roomId: string
+}
+
+const ListOrder = ({ roomId }: Props) => {
+  const { data: orders, mutate } = useSWR(roomId ? '/orders/' + roomId: null)
 
   const handleNewOrder = () => {
     if (socketService.socket)
@@ -34,7 +38,7 @@ const ListOrder = () => {
           <tbody>
             {orders?.map((order: any) => (
               <tr key={order?._id}>
-                <th>{order?.user.substring(0, 8)}</th>
+                <td className='font-semibold text-xs'>{order?.user.substring(0, 8)}</td>
                 <td>
                   {new Date(order?.createdAt).toLocaleString().split(',')[0]}
                 </td>

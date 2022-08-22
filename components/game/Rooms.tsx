@@ -1,14 +1,17 @@
+import { walletTypeState } from '@/atoms'
+import { useRecoilState } from 'recoil'
 import useSWR from 'swr'
 import JoinRoomModal from './JoinRoomModal'
 import Room from './Room'
 
 const Rooms = () => {
-  const { data, error, mutate } = useSWR('/rooms')
+  const [walletType] = useRecoilState(walletTypeState)
+  const { data, error, mutate } = useSWR('/rooms?type=' + walletType)
 
   return (
     <div className="w-full overflow-x-auto">
       <table className="table table-compact lg:table-normal w-full">
-        <thead>
+        <thead className='text-xs'>
           <tr>
             <th>ID</th>
             <th>Time</th>

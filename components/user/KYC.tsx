@@ -64,38 +64,38 @@ const KYC = () => {
       <div className="bg-neutral rounded-lg p-4">
         <form className="form-control min-w-[15rem]" onSubmit={handleSubmit}>
           <label className="label">
-            <span className="label-text">Họ và tên</span>
+            <span className="label-text text-primary-content">Họ và tên</span>
           </label>
           <input
             name="fullname"
             required
-            className="input input-bordered input-primary"
+            className="input input-bordered input-primary text-black"
           />
 
           <label className="label mt-2">
-            <span className="label-text">Số điện thoại</span>
+            <span className="label-text text-primary-content">Số điện thoại</span>
           </label>
           <input
             name="phoneNumber"
             required
             type="number"
-            className="input input-bordered input-primary"
+            className="input input-bordered input-primary text-black"
           />
 
           <label className="label mt-2">
-            <span className="label-text">Số CMND/CCCD</span>
+            <span className="label-text text-primary-content">Số CMND/CCCD</span>
           </label>
           <input
             name="idNumber"
             required
             type="number"
-            className="input input-bordered input-primary"
+            className="input input-bordered input-primary text-black"
           />
 
           <label className="label mt-2">
-            <span className="label-text">Giới tính</span>
+            <span className="label-text text-primary-content">Giới tính</span>
           </label>
-          <select name="gender" className="select select-primary w-full">
+          <select name="gender" className="select select-primary w-full text-black">
             <option value="male">Nam</option>
             <option value="female">Nữ</option>
             <option value="other">Khác</option>

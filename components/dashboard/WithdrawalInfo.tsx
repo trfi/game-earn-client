@@ -29,21 +29,21 @@ const WithdrawlalInfo = () => {
         <h3 className="mb-4 text-xl font-semibold">Payment Info</h3>
         <div className="form-control w-full">
           <label className="label mt-2">
-            <span className="label-text">Wallet Address</span>
+            <span className="label-text text-primary-content">Wallet Address</span>
           </label>
           <input
             name="payAddress"
             required
             defaultValue={user?.withdrawalInfo?.payAddress}
-            className="input input-bordered input-sm input-primary w-full"
+            className="input input-bordered input-sm input-primary w-full text-black"
           />
           <label className="label mt-2">
-            <span className="label-text">Network</span>
+            <span className="label-text text-primary-content">Network</span>
           </label>
           <select
             name="payNetwork"
             defaultValue={user?.withdrawalInfo?.payNetwork}
-            className="select select-sm select-primary w-full"
+            className="select select-sm select-primary w-full text-black"
           >
             <option value="BEP20">BEP20</option>
           </select>

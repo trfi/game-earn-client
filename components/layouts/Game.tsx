@@ -2,50 +2,58 @@ import { LayoutProps } from '@/models'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faVolumeUp, faVolumeMute } from '@fortawesome/free-solid-svg-icons'
 import { Auth } from '../common'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks'
 import useSWR from 'swr'
+import { useRecoilState } from 'recoil'
+import { walletTypeState } from '@/atoms'
 
 export function GameLayout({ children }: LayoutProps) {
   const [mute, setMute] = useState(false)
   const { user } = useAuth()
   const { data: balance } = useSWR('/wallet/balance')
+  const [walletType, setWalletType] = useRecoilState(walletTypeState)
 
   function handleVolume() {
     setMute(!mute)
+  }
+
+  const hanleChangeWalletType = (e: any) => {
+    setWalletType(e.target.value)
   }
 
   return (
     <Auth>
       <>
         <div className="min-h-screen">
-          <div className="h-26 fixed flex w-full items-center justify-between border-b bg-white py-8 lg:py-4 px-4 lg:border-b-0 lg:bg-neutral lg:px-8 lg:text-primary-content">
-            <Link href="/user">
-              <div className="absolute top-20 lg:relative lg:top-0">
-                <div className="avatar placeholder z-10 cursor-pointer">
-                  <div className="w-10 rounded-full bg-neutral ring ring-primary ring-offset-2 ring-offset-base-100 lg:w-16">
+          <div className="fixed flex w-full items-center justify-between border-b bg-neutral py-3 px-2 lg:border-b-0 lg:py-3 lg:px-8 lg:text-primary-content">
+            {/* Logo */}
+            <div className="w-24 cursor-pointer lg:w-36">
+              <Link href="/dashboard">
+                <img width="150px" src="/logo.png" alt="logo" />
+              </Link>
+            </div>
+            <div className="relative">
+              <div className="lg:text-md absolute -bottom-2 right-14 flex min-w-max flex-col gap-1 text-sm font-semibold lg:top-1 lg:right-[4.25rem]">
+                <select onChange={hanleChangeWalletType} className="select select-xs text-black">
+                  <option value="live">Live Balance</option>
+                  <option value="demo">Demo Balance</option>
+                </select>
+                <code className="ml-2">{walletType == 'live' ? balance?.balance : balance?.demoBalance} token</code>
+              </div>
+              <Link href="/user">
+                <div className="avatar placeholder z-10 cursor-pointer mr-1">
+                  <div className="w-10 rounded-full bg-neutral ring ring-primary ring-offset-2 ring-offset-base-100 lg:w-12">
                     <span className="text-xl font-bold uppercase lg:text-4xl">
                       {user?.username?.charAt(0)}
                     </span>
                   </div>
                 </div>
-                <div className="lg:text-md absolute top-0 left-6 min-w-[150px] cursor-pointer bg-primary px-8 py-0.5 text-center text-sm font-semibold text-primary-content hover:text-white lg:left-12 lg:py-1">
-                  {user?.username}
-                </div>
-                <code className="lg:text-md absolute -bottom-1 left-12 min-w-max text-sm font-semibold lg:bottom-2 lg:left-20">
-                  {balance?.balance} token
-                </code>
-              </div>
-            </Link>
-            {/* Logo */}
-            <div className="absolute left-1/2 w-36 -translate-x-1/2 transform cursor-pointer">
-              <Link href="/dashboard">
-                <img width="150px" src="/logo.png" alt="logo" />
               </Link>
             </div>
-            <div
-              className="cursor-pointer text-xl lg:text-3xl absolute right-6"
+            {/* <div
+              className="absolute right-6 cursor-pointer text-xl lg:text-3xl"
               onClick={handleVolume}
             >
               {mute ? (
@@ -53,15 +61,11 @@ export function GameLayout({ children }: LayoutProps) {
               ) : (
                 <FontAwesomeIcon icon={faVolumeUp} />
               )}
-            </div>
+            </div> */}
           </div>
-          <div className="h-full pt-[102px]">
-            <div className="p-4 2xl:p-10">{children}</div>
+          <div className="h-full pt-[65px] lg:pt-[72px]">
+            <div className="p-4 lg:pt-8 lg:px-4 2xl:p-10">{children}</div>
           </div>
-          {/* <div className="fixed bottom-4 flex w-full justify-end gap-4 px-8">
-            <button className="btn btn-accent">Mail box</button>
-            <button className="btn btn-accent">Support</button>
-          </div> */}
         </div>
       </>
     </Auth>

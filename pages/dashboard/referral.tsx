@@ -16,7 +16,7 @@ const Referral: NextPageWithLayout = () => {
 
   function onCopyHandler() {
     navigator.clipboard.writeText(refLink)
-    toast.success('Sao chép thành công')
+    toast.success('Copy successfuly')
   }
 
   return (
@@ -24,7 +24,7 @@ const Referral: NextPageWithLayout = () => {
       <div className="my-8 flex flex-col items-center">
         <h2 className="text-xl font-semibold">My referral link:</h2> <br />
         <div className="form-control w-full max-w-xl">
-          <div className="input-group text-white">
+          <div className="input-group text-gray-500">
             <input
               type="text"
               value={refLink}
@@ -42,11 +42,10 @@ const Referral: NextPageWithLayout = () => {
       <div className="mt-10 flex flex-col items-center">
         <Disclosure defaultOpen={false}>
           <p>
-            Nhận được tiền hoa hồng khi giới thiệu người chơi tham gia và mua
-            KNB
+            Get commission for referring players
           </p>
-          <Disclosure.Button className="btn btn-outline btn-success mx-auto mt-3 mb-6">
-            Xem hoa hồng giới thiệu
+          <Disclosure.Button className="btn btn-outline btn-accent mx-auto mt-3 mb-6">
+            Commisson Programs
           </Disclosure.Button>
           <Disclosure.Panel>
             <img

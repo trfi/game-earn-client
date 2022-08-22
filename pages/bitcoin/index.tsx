@@ -9,7 +9,7 @@ import Link from 'next/link'
 const BitcoinGame: NextPageWithLayout = () => {
   return (
     <div className="relative min-h-[80vh] flex flex-col justify-center">
-      <div className="absolute right-0 lg:left-0 -top-10 lg:top-2">
+      <div className="absolute right-0 lg:left-0 top-0 lg:top-2">
         <Link href="/play">
           <FontAwesomeIcon
             className="cursor-pointer text-3xl lg:text-5xl"
@@ -17,7 +17,7 @@ const BitcoinGame: NextPageWithLayout = () => {
           />
         </Link>
       </div>
-      <h1 className="text-center text-2xl font-bold lg:mt-0 lg:mb-12 lg:text-3xl">
+      <h1 className="text-center text-2xl font-bold lg:mt-0 mb-6 lg:mb-12 lg:text-3xl">
         BITCOIN PRICE PREDICTION
       </h1>
       <div className="flex h-full flex-col items-center justify-center">
@@ -27,8 +27,8 @@ const BitcoinGame: NextPageWithLayout = () => {
         >
           Create room
         </label> */}
-        <div className="mx-auto w-full max-w-screen-lg rounded-xl border-4 border-primary p-6">
-          <h4 className="mb-6 text-center font-bold">Room List</h4>
+        <div className="mx-auto w-full max-w-screen-lg rounded-xl border-4 border-primary p-2 lg:p-6">
+          <h4 className="mb-3 lg:mb-6 text-center font-bold">Room List</h4>
           <Rooms />
         </div>
       </div>

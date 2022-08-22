@@ -21,7 +21,7 @@ const Dashboard: NextPageWithLayout = () => {
           <div className="stat-figure text-info">
             <FontAwesomeIcon size='lg' icon={faHandHoldingUsd} />
           </div>
-          <div className="stat-title">Gói ref hiện tại</div>
+          <div className="stat-title">Current Ref Package</div>
           <div className="stat-value">{user?.currentPack ? user.currentPack + '$' : '--'}</div>
           <div className="stat-desc">Jan 1st - Feb 1st</div>
         </div>
@@ -30,7 +30,7 @@ const Dashboard: NextPageWithLayout = () => {
           <div className="stat-figure text-info">
             <FontAwesomeIcon size='lg' icon={faUser} />
           </div>
-          <div className="stat-title">Số user F1</div>
+          <div className="stat-title">User F1</div>
           <div className="stat-value">{user?.referralChild?.length}</div>
           <div className="stat-desc">↗︎ 112 (22%)</div>
         </div>
@@ -39,7 +39,7 @@ const Dashboard: NextPageWithLayout = () => {
           <div className="stat-figure text-info">
             <FontAwesomeIcon size='lg' icon={faUserPlus} />
           </div>
-          <div className="stat-title">Đăng ký mới</div>
+          <div className="stat-title">New Users</div>
           <div className="stat-value">{user?.totalRef}</div>
           <div className="stat-desc">↗︎ 90 (14%)</div>
         </div>
@@ -47,16 +47,16 @@ const Dashboard: NextPageWithLayout = () => {
 
       <div className="stats stats-vertical w-full max-w-screen-xl bg-primary py-4 text-primary-content lg:stats-horizontal">
         <div className="stat">
-          <div className="stat-title">Số dư ví chính</div>
+          <div className="stat-title">Wallet balance</div>
           <div className="stat-value">{user?.balance}$</div>
           <div className="stat-actions">
             <Link href="/dashboard/wallet">
-              <button className="btn btn-success btn-sm">Nạp tiền</button>
+              <button className="btn btn-accent btn-sm">Deposit</button>
             </Link>
           </div>
         </div>
         <div className="stat">
-          <div className="stat-title">Số dư ví hoa hồng</div>
+          <div className="stat-title">Commission Balance</div>
           <div className="stat-value">{user?.commissionBalance}$</div>
           {user?.currentPack < 500 && (
             <div className="stat-desc text-base text-gray-300 opacity-100">
@@ -69,25 +69,25 @@ const Dashboard: NextPageWithLayout = () => {
           )}
           <div className="stat-actions">
             <Link href="/dashboard/wallet/withdrawal">
-              <button className="btn btn-success btn-sm">Rút tiền</button>
+              <button className="btn btn-accent btn-sm">Withdrawal</button>
             </Link>
           </div>
         </div>
         <div className="stat">
-          <div className="stat-title">Tổng đã nạp</div>
+          <div className="stat-title">Total Deposit</div>
           <div className="stat-value">${data?.totalDeposit}</div>
           <div className="stat-actions">
             <Link href="/dashboard/deposit-history">
-              <button className="btn btn-sm">Lịch sử nạp</button>
+              <button className="btn btn-sm">Deposit History</button>
             </Link>
           </div>
         </div>
         <div className="stat">
-          <div className="stat-title">Tổng đã rút</div>
+          <div className="stat-title">Total Withdrawal</div>
           <div className="stat-value">${data?.totalWithdrawal}</div>
           <div className="stat-actions">
             <Link href="/dashboard/wallet/withdrawal">
-              <button className="btn btn-sm">Lịch sử rút</button>
+              <button className="btn btn-sm">Withdrawal History</button>
             </Link>
           </div>
         </div>
