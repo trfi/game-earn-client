@@ -12,46 +12,30 @@ import gameService from '@/services/gameService'
 import socketService from '@/services/socketService'
 import React, { useContext, useEffect, useState } from 'react'
 import gameContext from '@/contexts/gameContext'
-import Countdown from '@/components/game/Countdown'
 import useSWR from 'swr'
-import axiosClient from '@/api/axios-client'
 import ListOrder from '@/components/game/ListOrder'
 import { useAuth } from '@/hooks'
 import { DefaultEventsMap } from '@socket.io/component-emitter'
 import { Socket } from 'socket.io-client'
+import Order from '@/components/game/Order'
+
+export interface IRoomData {
+  id: string
+  time: number
+  amount: number
+  maxPlayer: number
+}
 
 const Room: NextPageWithLayout = () => {
   const router = useRouter()
   const { rid } = router.query
-  const { data: roomData, error, mutate } = useSWR(rid ? '/rooms/' + rid : null)
+  const { data: roomData } = useSWR<IRoomData>(rid ? '/rooms/' + rid : null)
   const [isJoining, setJoining] = useState(false)
   const [participants, setParticipants] = useState(1)
   const { setInRoom, isInRoom } = useContext(gameContext)
   const { mutate: mutateOrders } = useSWR('/orders')
   const { user } = useAuth()
   const { mutate: mutateBalance } = useSWR('/wallet/balance')
-
-  async function handleOrder(e: any) {
-    e.preventDefault()
-    // const data = {
-    //   body: { price: Number(e.target.price.value), amount: roomData.amount },
-    //   userId: user.id,
-    // }
-    const data = {
-      roomId: rid,
-      price: Number(e.target.price.value),
-      amount: roomData.amount,
-    }
-    if (!socketService.socket) return
-    try {
-      await axiosClient.post('/orders', data)
-      // gameService.newOrder(socketService.socket, data)
-      e.target.price.value = ''
-      toast.success('Order Sucess')
-    } catch (err: any) {
-      toast.error(err.message)
-    }
-  }
 
   const leaveRoom = async (e: React.FormEvent) => {
     const socket = socketService.socket
@@ -96,7 +80,7 @@ const Room: NextPageWithLayout = () => {
     setInRoom(true)
 
     setJoining(false)
-    
+
     handleGameResutl(socket)
   }
 
@@ -110,15 +94,16 @@ const Room: NextPageWithLayout = () => {
     }
   }
 
-  const handleGameResutl = (socket: Socket<DefaultEventsMap, DefaultEventsMap>) => {
+  const handleGameResutl = (
+    socket: Socket<DefaultEventsMap, DefaultEventsMap>
+  ) => {
     gameService.onOrderResult(socket, ({ result, amount }) => {
       console.log('orderResult', result, amount)
       if (result === 1) {
-        // toast.success(`WIN +${amount}`, { duration: 5000 })
+        mutateBalance()
+        toast.success(`WIN +${amount}`, { duration: 3000 })
         showResult()
-      } else if (result === 2)
-        toast.error(`LOSE -${amount}`, { duration: 5000 })
-      mutateBalance()
+      }
       mutateOrders()
     })
     gameService.onCountUser(socket, (count) => {
@@ -130,10 +115,6 @@ const Room: NextPageWithLayout = () => {
     joinRoom()
   }, [rid, user])
 
-  // useEffect(() => {
-  //   handleGameResutl()
-  // })
-
   const chartStyles: CopyrightStyles = {
     parent: {
       display: 'none',
@@ -143,15 +124,15 @@ const Room: NextPageWithLayout = () => {
   return (
     <div>
       <div className="flex flex-col justify-between gap-4 lg:flex-row">
-        <div className="w-full space-y-2 px-2 pt-2 lg:w-[370px] lg:space-y-4">
-          <div className="hidden lg:block ">
+        <div className="relative w-full space-y-2 px-2 pt-2 lg:w-[370px] lg:space-y-4">
+          <div className="absolute right-1 -top-10 lg:left-0 lg:top-2">
             <FontAwesomeIcon
               onClick={leaveRoom}
               className="cursor-pointer text-3xl lg:text-5xl"
               icon={faCircleChevronLeft}
             />
           </div>
-          <div className="grid grid-cols-2 text-sm font-semibold lg:grid-cols-1 lg:text-base">
+          <div className="grid grid-cols-2 text-sm font-semibold lg:grid-cols-1 lg:pt-10 lg:text-base">
             <span>Room {rid}</span>
             <span>Time: {roomData?.time}m</span>
             <span>Amount: {roomData?.amount} token</span>
@@ -180,19 +161,7 @@ const Room: NextPageWithLayout = () => {
             ></AdvancedRealTimeChart>
           </div>
         </div>
-
-        <div className="flex flex-col items-center justify-center gap-3 lg:absolute lg:bottom-16 lg:left-1/2 lg:-translate-x-1/2 lg:transform lg:flex-row lg:gap-6">
-          <Countdown />
-          <form onSubmit={handleOrder}>
-            <input
-              type="number"
-              placeholder="Price"
-              name="price"
-              className="input input-bordered input-sm mr-2 lg:input-md"
-            />
-            <button className="btn btn-accent btn-sm lg:btn-md">Ready</button>
-          </form>
-        </div>
+        {roomData && <Order roomData={roomData} />}
         <ListOrder />
       </div>
 

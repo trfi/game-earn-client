@@ -19,7 +19,7 @@ const ListOrder = () => {
 
   return (
     <div className="w-full rounded-xl border-2 border-primary p-2 lg:w-[370px]">
-      <h2 className="text-center text-lg font-semibold text-yellow-500">Total Reward 1000</h2>
+      <h2 className="text-center text-lg font-semibold text-yellow-500">Total Reward 0</h2>
       <hr className="my-3" />
       <div className="">
         <h4 className="mb-2 text-center font-semibold">Orders</h4>

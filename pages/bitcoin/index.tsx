@@ -8,11 +8,16 @@ import Link from 'next/link'
 
 const BitcoinGame: NextPageWithLayout = () => {
   return (
-    <div className="min-h-[70vh]">
-      <Link href="/play">
-        <FontAwesomeIcon className='cursor-pointer text-3xl lg:text-5xl' icon={faCircleChevronLeft} />
-      </Link>
-      <h1 className="mt-4 lg:mt-0 mb-6 lg:mb-12 text-center text-2xl lg:text-3xl font-bold">
+    <div className="relative min-h-[80vh] flex flex-col justify-center">
+      <div className="absolute right-0 lg:left-0 -top-10 lg:top-2">
+        <Link href="/play">
+          <FontAwesomeIcon
+            className="cursor-pointer text-3xl lg:text-5xl"
+            icon={faCircleChevronLeft}
+          />
+        </Link>
+      </div>
+      <h1 className="text-center text-2xl font-bold lg:mt-0 lg:mb-12 lg:text-3xl">
         BITCOIN PRICE PREDICTION
       </h1>
       <div className="flex h-full flex-col items-center justify-center">
