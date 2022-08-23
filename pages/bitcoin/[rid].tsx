@@ -115,7 +115,12 @@ const Room: NextPageWithLayout = () => {
 
   useEffect(() => {
     joinRoom()
-  }, [rid, user])
+    return () => {
+      if (socketService.socket) {
+        socketService.socket.off('on_order_result')
+      }
+    }
+  }, [socketService.socket, rid, user])
 
   return (
     <>

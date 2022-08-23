@@ -3,7 +3,6 @@ import useSWR from 'swr'
 import gameService from '@/services/gameService'
 import socketService from '@/services/socketService'
 import { Tab } from '@headlessui/react'
-import Histories from './Histories'
 
 interface Props {
   roomId: string
@@ -15,25 +14,26 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
   const [histories, setHistories] = useState<Object[]>([])
   let titles = ['Orders', 'Histories']
 
-  const handleNewOrder = () => {
+  useEffect(() => {
     if (socketService.socket) {
       gameService.onNewOrder(socketService.socket, (data) => {
         mutate((prev: any) => [data, ...prev])
       })
       gameService.onNewOrderHistory(socketService.socket, (data) => {
-        console.log('onNewOrderHistory', data)
         setHistories((prev) => [data, ...prev])
       })
     }
-  }
-
-  useEffect(() => {
-    handleNewOrder()
-  }, [])
+    return () => {
+      if (socketService.socket) {
+        socketService.socket.off('on_new_order')
+        socketService.socket.off('on_new_order_history')
+      }
+    }
+  }, [socketService.socket])
 
   return (
-    <div className="h-full w-full rounded-xl p-0 shadow-xl lg:max-w-[320px] lg:min-w-[300px]">
-      <h2 className="text-center text-md lg:text-lg font-semibold text-yellow-500">
+    <div className="h-full w-full rounded-xl p-0 shadow-xl lg:min-w-[300px] lg:max-w-[320px]">
+      <h2 className="text-md text-center font-semibold text-yellow-500 lg:text-lg">
         Total Reward {totalReward}
       </h2>
       <hr className="mt-1 mb-2 lg:my-3" />
@@ -62,26 +62,35 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders?.map((order: any) => (
-                    <tr key={order?._id}>
-                      <td className="text-xs font-semibold">
-                        {order?.user.substring(0, 8)}
-                      </td>
-                      <td>
-                        {
-                          new Date(order?.createdAt)
-                            .toLocaleString()
-                            .split(',')[0]
-                        }
-                      </td>
-                      <td>{order?.price}</td>
-                    </tr>
-                  ))}
+                  {orders?.map(
+                    (order: any) =>
+                      order && (
+                        <tr key={order._id}>
+                          <td className="text-xs font-semibold">
+                            {order?.user.substring(0, 8)}
+                          </td>
+                          <td>
+                            <div className="badge badge-sm">
+                              {
+                                new Date(order.createdAt)
+                                  .toLocaleString()
+                                  .split(',')[0]
+                              }
+                            </div>
+                          </td>
+                          <td>
+                            <div className="badge badge-sm badge-primary">
+                              {order.price}
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                  )}
                 </tbody>
               </table>
             </Tab.Panel>
-            <Tab.Panel className="max-h-56 lg:max-h-[calc(100vh-250px)] overflow-y-auto pr-[8px] w-[calc(100%+8px)]">
-              <table className="table-compact table w-full box-border">
+            <Tab.Panel className="max-h-56 w-[calc(100%+8px)] overflow-y-auto pr-[8px] lg:max-h-[calc(100vh-250px)]">
+              <table className="table-compact box-border table w-full">
                 <thead>
                   <tr>
                     <th>Time</th>
@@ -90,23 +99,42 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
                     <th>Reward</th>
                   </tr>
                 </thead>
-                <tbody className="">
+                <tbody>
                   {histories?.map(
                     (h: any) =>
                       h && (
-                        <tr key={h.time}>
+                        <tr key={h.id}>
                           <td>
-                            <div className='text-xs'>{new Date(h.time).toLocaleString().split(',')[0].slice(0, -3)}</div>
+                            <div className="text-xs">
+                              {new Date(h.time)
+                                .toLocaleString()
+                                .split(',')[0]
+                                .slice(0, -3)}
+                            </div>
                           </td>
-                          <td><div className='badge badge-primary badge-sm'>{h.price}</div></td>
-                          <td><div className='badge badge-primary badge-sm'>{h.resultPrice}</div></td>
-                          <td><div className={`badge badge-sm ${
-                                  h.result == 1
-                                    ? 'badge-accent'
-                                    : h.result == 2
-                                    ? 'badge-error'
-                                    : 'badge-warning'
-                                }`}>{h.amount > 0 ? '+' + h.amount : h.amount}</div></td>
+                          <td>
+                            <div className="badge badge-sm badge-primary">
+                              {h.price}
+                            </div>
+                          </td>
+                          <td>
+                            <div className="badge badge-sm badge-primary">
+                              {h.resultPrice}
+                            </div>
+                          </td>
+                          <td>
+                            <div
+                              className={`badge badge-sm ${
+                                h.result == 1
+                                  ? 'badge-accent'
+                                  : h.result == 2
+                                  ? 'badge-error'
+                                  : 'badge-warning'
+                              }`}
+                            >
+                              {h.amount > 0 ? '+' + h.amount : h.amount}
+                            </div>
+                          </td>
                           {/* <td className="text-right">
                             {
                               <div

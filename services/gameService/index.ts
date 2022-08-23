@@ -34,6 +34,7 @@ class GameService {
   }
 
   public async onNewOrder(socket: Socket, listiner: (message: any) => void) {
+    console.log('listen new order');
     socket.on('on_new_order', (message) => listiner(message))
   }
 
