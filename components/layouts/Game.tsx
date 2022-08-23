@@ -27,7 +27,7 @@ export function GameLayout({ children }: LayoutProps) {
     <Auth>
       <>
         <div className="min-h-screen">
-          <div className="fixed flex w-full items-center justify-between border-b bg-neutral py-3 px-2 lg:border-b-0 lg:py-3 lg:px-8 lg:text-primary-content">
+          <div className="fixed flex w-full items-center justify-between bg-neutral py-3 px-2 lg:py-3 lg:px-8 lg:text-primary-content z-50">
             {/* Logo */}
             <div className="w-24 cursor-pointer lg:w-36">
               <Link href="/dashboard">
@@ -45,7 +45,7 @@ export function GameLayout({ children }: LayoutProps) {
               <Link href="/user">
                 <div className="avatar placeholder z-10 cursor-pointer mr-1">
                   <div className="w-10 rounded-full bg-neutral ring ring-primary ring-offset-2 ring-offset-base-100 lg:w-12">
-                    <span className="text-xl font-bold uppercase lg:text-4xl">
+                    <span className="text-xl font-bold uppercase lg:text-3xl">
                       {user?.username?.charAt(0)}
                     </span>
                   </div>
@@ -63,8 +63,8 @@ export function GameLayout({ children }: LayoutProps) {
               )}
             </div> */}
           </div>
-          <div className="h-full pt-[65px] lg:pt-[72px]">
-            <div className="p-4 lg:pt-8 lg:px-4 2xl:p-10">{children}</div>
+          <div className="h-screen pt-[65px] lg:pt-[72px]">
+            <div className="p-2 md:p-4 lg:pt-8 lg:px-4 2xl:p-10 h-full">{children}</div>
           </div>
         </div>
       </>

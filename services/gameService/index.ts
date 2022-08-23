@@ -34,12 +34,14 @@ class GameService {
   }
 
   public async onNewOrder(socket: Socket, listiner: (message: any) => void) {
-    console.log('on_new_order');
     socket.on('on_new_order', (message) => listiner(message))
   }
 
+  public async onNewOrderHistory(socket: Socket, listiner: (message: any) => void) {
+    socket.on('on_new_order_history', (message) => listiner(message))
+  }
+
   public async onOrderResult(socket: Socket, listiner: (message: any) => void) {
-    console.log('on_order_result');
     socket.on('on_order_result', (message) => listiner(message))
   }
 

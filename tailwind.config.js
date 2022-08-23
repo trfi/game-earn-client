@@ -33,7 +33,9 @@ module.exports = {
           'primary': '#008aa6',
           'secondary': '#e1b400',
           'neutral': '#2a4561',
-          'accent-content': '#ebfffd'
+          'accent-content': '#ebfffd',
+          'warning-content': '#ffffff',
+          'error-content': '#ffffff'
         }
       },
       {

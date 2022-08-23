@@ -1,36 +1,43 @@
 import axiosClient from '@/api/axios-client'
-import { walletTypeState } from '@/atoms'
 import { IRoomData } from '@/pages/bitcoin/[rid]'
-import socketService from '@/services/socketService'
 import { getServerDate } from '@/utils/serverDate.js'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useRecoilState } from 'recoil'
 import useSWR from 'swr'
 
 interface Props {
   roomData: IRoomData
 }
 
+interface ICreateOrder {
+  roomId: string
+  price: number
+}
+
 const Order = ({ roomData }: Props) => {
   let [serverDate, setServerDate] = useState(0)
   let [isDisableOrder, setIsDisableOrder] = useState(false)
-  const [walletType, setWalletType] = useRecoilState(walletTypeState)
+  let [isOrdered, setIsOrdered] = useState(false)
   const { mutate: mutateBalance } = useSWR('/wallet/balance')
 
   async function handleOrder(e: any) {
     e.preventDefault()
-    const data = {
-      roomId: roomData.id,
-      price: Number(e.target.price.value),
-      amount: roomData.amount,
-    }
-    if (!socketService.socket) return
-    try {
-      await axiosClient.post('/orders', data)
-      e.target.price.value = ''
+    const price = Number(e.target.price.value)
+    order(price).then(() => {
       mutateBalance()
       toast.success('Order Sucess')
+      e.target.price.value = ''
+    })
+  }
+
+  async function order(price: number) {
+    setIsOrdered(true)
+    const data: ICreateOrder = {
+      roomId: roomData.id,
+      price,
+    }
+    try {
+      await axiosClient.post('/orders', data)
     } catch (err: any) {
       toast.error(err.message)
     }
@@ -41,20 +48,26 @@ const Order = ({ roomData }: Props) => {
     const interval = setInterval(async () => {
       const { offset } = await getServerDate()
       const clientDate = new Date()
-      const remainingSecond = 59 - new Date(clientDate.getTime() + offset).getSeconds()
+      const remainingSecond =
+        59 - new Date(clientDate.getTime() + offset).getSeconds()
       setServerDate(remainingSecond)
-      if (remainingSecond <= 15) setIsDisableOrder(true)
-      else setIsDisableOrder(false)
+      if (remainingSecond <= 15) {
+        if (!isOrdered) order(0)
+        setIsDisableOrder(true)
+      } else {
+        if (isDisableOrder) setIsOrdered(false)
+        setIsDisableOrder(false)
+      }
     }, 1000)
     return () => {
       clearInterval(interval)
       isMounted = false
     }
-  }, [])
+  }, [isOrdered, isDisableOrder])
 
   return (
-    <div className="flex flex-col items-center justify-center gap-3 lg:absolute lg:bottom-16 lg:left-1/2 lg:-translate-x-1/2 lg:transform lg:flex-row lg:gap-6">
-      <div className="rounded-lg border-2 border-red-500 px-6 py-1 text-xl font-bold text-red-500 lg:py-1.5 lg:text-2xl">
+    <div className="mt-3 flex flex-col items-center justify-center gap-3 lg:absolute lg:bottom-16 lg:left-1/2 lg:-translate-x-1/2 lg:transform lg:flex-row lg:gap-6">
+      <div className="rounded-lg border-2 border-red-500 px-6 py-0 text-lg font-bold text-red-500 lg:py-1.5 lg:text-2xl">
         00:{String(serverDate).padStart(2, '0')}
       </div>
       <form onSubmit={handleOrder}>
@@ -66,7 +79,12 @@ const Order = ({ roomData }: Props) => {
           className="input input-bordered input-sm mr-2 lg:input-md"
           disabled={isDisableOrder}
         />
-        <button disabled={isDisableOrder} className="btn btn-accent btn-sm lg:btn-md">Ready</button>
+        <button
+          disabled={isDisableOrder}
+          className="btn btn-accent btn-sm lg:btn-md"
+        >
+          Ready
+        </button>
       </form>
     </div>
   )

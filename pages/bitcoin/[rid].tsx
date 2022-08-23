@@ -4,20 +4,17 @@ import { GameLayout } from '@/components/layouts/Game'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import toast from 'react-hot-toast'
-import {
-  AdvancedRealTimeChart,
-  CopyrightStyles,
-} from 'react-ts-tradingview-widgets'
 import gameService from '@/services/gameService'
 import socketService from '@/services/socketService'
 import React, { useContext, useEffect, useState } from 'react'
 import gameContext from '@/contexts/gameContext'
 import useSWR from 'swr'
-import ListOrder from '@/components/game/ListOrder'
+import ListOrder from '@/components/game/RightPanel/ListOrder'
 import { useAuth } from '@/hooks'
 import { DefaultEventsMap } from '@socket.io/component-emitter'
 import { Socket } from 'socket.io-client'
 import Order from '@/components/game/Order'
+import TradingViewChart from '@/components/game/TradingViewChart'
 
 export interface IRoomData {
   id: string
@@ -36,6 +33,7 @@ const Room: NextPageWithLayout = () => {
   const { mutate: mutateOrders } = useSWR(roomData?.id ? '/orders/' + roomData.id: null)
   const { user } = useAuth()
   const { mutate: mutateBalance } = useSWR('/wallet/balance')
+  const [totalReward, setTotalReward] = useState(0)
 
   const leaveRoom = async (e: React.FormEvent) => {
     const socket = socketService.socket
@@ -103,6 +101,10 @@ const Room: NextPageWithLayout = () => {
         mutateBalance()
         toast.success(`WIN +${amount}`, { duration: 3000 })
         showResult()
+        setTotalReward((preAmount) => preAmount += amount )
+      }
+      else if (result === 2) {
+        setTotalReward((preAmount) => preAmount -= amount )
       }
       mutateOrders()
     })
@@ -115,17 +117,11 @@ const Room: NextPageWithLayout = () => {
     joinRoom()
   }, [rid, user])
 
-  const chartStyles: CopyrightStyles = {
-    parent: {
-      display: 'none',
-    },
-  }
-
   return (
-    <div>
-      <div className="flex flex-col justify-between gap-4 lg:flex-row">
-        <div className="relative w-full space-y-2 px-2 pt-0 lg:w-[370px] lg:space-y-4 lg:pt-2">
-          <div className="absolute right-0 top-0 lg:left-0 lg:top-2">
+    <>
+      <div className="flex flex-col justify-start lg:justify-between gap-4 lg:flex-row h-full">
+        <div className="relative w-full space-y-2 px-2 pt-0 lg:w-[370px] lg:space-y-4 lg:pt-2 -mt-1.5 lg:mt-0">
+          <div className="absolute right-0 top-1 lg:left-0 lg:top-2">
             <FontAwesomeIcon
               onClick={leaveRoom}
               className="cursor-pointer text-3xl lg:text-5xl"
@@ -141,30 +137,11 @@ const Room: NextPageWithLayout = () => {
             </span>
           </div>
         </div>
-        <div className="w-full max-w-screen-lg">
-          <div id="chart" className="h-[30vh] rounded-lg lg:h-[60vh]">
-            <AdvancedRealTimeChart
-              autosize
-              hide_side_toolbar
-              hide_top_toolbar
-              hide_legend
-              save_image={false}
-              container_id="tradingview_c04cf"
-              theme="dark"
-              timezone="Asia/Ho_Chi-Minh"
-              locale="vi_VN"
-              interval="1"
-              withdateranges={false}
-              allow_symbol_change={false}
-              symbol="BINANCE:BTCUSDT"
-              copyrightStyles={chartStyles}
-            ></AdvancedRealTimeChart>
-          </div>
-        </div>
+        <TradingViewChart />
         {roomData && (
           <>
             <Order roomData={roomData} />
-            <ListOrder roomId={roomData.id} />
+            <ListOrder roomId={roomData.id} totalReward={totalReward} />
           </>
         )}
       </div>
@@ -177,7 +154,7 @@ const Room: NextPageWithLayout = () => {
           alt="victory"
         />
       </div>
-    </div>
+    </>
   )
 }
 
