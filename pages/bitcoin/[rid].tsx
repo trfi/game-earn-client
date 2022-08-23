@@ -99,7 +99,7 @@ const Room: NextPageWithLayout = () => {
       console.log('orderResult', result, amount)
       if (result === 1) {
         mutateBalance()
-        toast.success(`WIN +${amount}`, { duration: 3000 })
+        toast.success(`+${amount} token`, { duration: 3000 })
         showResult()
         setTotalReward((preAmount) => preAmount += amount )
       }
@@ -119,16 +119,16 @@ const Room: NextPageWithLayout = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-start lg:justify-between gap-4 lg:flex-row h-full">
-        <div className="relative w-full space-y-2 px-2 pt-0 lg:w-[370px] lg:space-y-4 lg:pt-2 -mt-1.5 lg:mt-0">
+      <div className="flex flex-col justify-start lg:justify-between gap-6 lg:flex-row h-full">
+        <div className="relative w-full space-y-2 px-2 pt-0 lg:w-[250px] lg:space-y-4 lg:pt-2 -mt-1.5 lg:mt-0">
           <div className="absolute right-0 top-1 lg:left-0 lg:top-2">
             <FontAwesomeIcon
               onClick={leaveRoom}
-              className="cursor-pointer text-3xl lg:text-5xl"
+              className="cursor-pointer text-3xl lg:text-4xl"
               icon={faCircleChevronLeft}
             />
           </div>
-          <div className="grid grid-cols-2 text-sm font-semibold lg:grid-cols-1 lg:pt-10 lg:text-base">
+          <div className="grid grid-cols-2 text-sm font-semibold lg:grid-cols-1 lg:pt-8 lg:text-base">
             <span>Room {rid}</span>
             <span>Time: {roomData?.time}m</span>
             <span>Amount: {roomData?.amount} token</span>
@@ -137,10 +137,9 @@ const Room: NextPageWithLayout = () => {
             </span>
           </div>
         </div>
-        <TradingViewChart />
         {roomData && (
           <>
-            <Order roomData={roomData} />
+            <TradingViewChart roomData={roomData} />
             <ListOrder roomId={roomData.id} totalReward={totalReward} />
           </>
         )}

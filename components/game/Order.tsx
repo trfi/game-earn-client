@@ -66,8 +66,8 @@ const Order = ({ roomData }: Props) => {
   }, [isOrdered, isDisableOrder])
 
   return (
-    <div className="mt-3 flex flex-col items-center justify-center gap-3 lg:absolute lg:bottom-16 lg:left-1/2 lg:-translate-x-1/2 lg:transform lg:flex-row lg:gap-6">
-      <div className="rounded-lg border-2 border-red-500 px-6 py-0 text-lg font-bold text-red-500 lg:py-1.5 lg:text-2xl">
+    <div className="mt-2 lg:mt-8 flex flex-col items-center justify-center gap-3 lg:flex-row lg:gap-6">
+      <div className={`rounded-lg border-2 px-6 py-0 text-lg font-bold lg:py-1.5 lg:text-2xl ${isDisableOrder ? 'border-red-500 text-red-500' : 'border-primary text-primary'}`}>
         00:{String(serverDate).padStart(2, '0')}
       </div>
       <form onSubmit={handleOrder}>
@@ -76,6 +76,7 @@ const Order = ({ roomData }: Props) => {
           min="0"
           placeholder="Price"
           name="price"
+          required
           className="input input-bordered input-sm mr-2 lg:input-md"
           disabled={isDisableOrder}
         />

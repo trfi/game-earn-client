@@ -12,7 +12,7 @@ const BitcoinGame: NextPageWithLayout = () => {
       <div className="absolute right-0 lg:left-0 top-0 lg:top-2">
         <Link href="/play">
           <FontAwesomeIcon
-            className="cursor-pointer text-3xl lg:text-5xl"
+            className="cursor-pointer text-3xl lg:text-4xl"
             icon={faCircleChevronLeft}
           />
         </Link>

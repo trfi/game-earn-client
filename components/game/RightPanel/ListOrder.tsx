@@ -32,7 +32,7 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
   }, [])
 
   return (
-    <div className="h-full w-full rounded-xl border-2 border-primary p-2 lg:w-[370px]">
+    <div className="h-full w-full rounded-xl p-0 shadow-xl lg:max-w-[320px] lg:min-w-[300px]">
       <h2 className="text-center text-md lg:text-lg font-semibold text-yellow-500">
         Total Reward {totalReward}
       </h2>
@@ -80,27 +80,34 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
                 </tbody>
               </table>
             </Tab.Panel>
-            <Tab.Panel>
-              <table className="table-compact table w-full scroll">
+            <Tab.Panel className="max-h-56 lg:max-h-[calc(100vh-250px)] overflow-y-auto pr-[8px] w-[calc(100%+8px)]">
+              <table className="table-compact table w-full box-border">
                 <thead>
                   <tr>
                     <th>Time</th>
+                    <th>Predict</th>
                     <th>Result</th>
                     <th>Reward</th>
-                    <th>Status</th>
                   </tr>
                 </thead>
-                <tbody className="max-h-48 overflow-y-auto">
+                <tbody className="">
                   {histories?.map(
                     (h: any) =>
                       h && (
                         <tr key={h.time}>
                           <td>
-                            <div className='text-xs'>{new Date(h.time).toLocaleString().split(',')[0]}</div>
+                            <div className='text-xs'>{new Date(h.time).toLocaleString().split(',')[0].slice(0, -3)}</div>
                           </td>
+                          <td><div className='badge badge-primary badge-sm'>{h.price}</div></td>
                           <td><div className='badge badge-primary badge-sm'>{h.resultPrice}</div></td>
-                          <td><div className='badge badge-warning badge-sm'>{h.amount > 0 ? '+' + h.amount : h.amount}</div></td>
-                          <td className="text-right">
+                          <td><div className={`badge badge-sm ${
+                                  h.result == 1
+                                    ? 'badge-accent'
+                                    : h.result == 2
+                                    ? 'badge-error'
+                                    : 'badge-warning'
+                                }`}>{h.amount > 0 ? '+' + h.amount : h.amount}</div></td>
+                          {/* <td className="text-right">
                             {
                               <div
                                 className={`badge ${
@@ -118,7 +125,7 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
                                   : '---'}
                               </div>
                             }
-                          </td>
+                          </td> */}
                         </tr>
                       )
                   )}

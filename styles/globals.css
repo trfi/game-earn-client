@@ -25,23 +25,6 @@ h1.title {
   font-size: 0.6rem;
 }
 
-table.scroll thead {
-  flex: 0 0 auto;
-  width: 100%;
-}
-table.scroll tbody {
-  flex: 1 1 auto;
-  display: block;
-}
-table.scroll tbody tr {
-  width: 100%;
-}
-table.scroll thead,
-table.scroll tbody tr {
-  display: table;
-  table-layout: fixed;
-}
-
 /* End table */
 
 .card {
@@ -155,4 +138,25 @@ html {
   to {
     opacity: 0;
   }
+}
+
+/* scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
