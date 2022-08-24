@@ -32,19 +32,19 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
     }
     return () => {
       isMounted = false
-      // if (socketService.socket) {
-      //   socketService.socket.off('on_new_order')
-      //   socketService.socket.off('on_new_order_history')
-      // }
+      if (socketService.socket) {
+        socketService.socket.off('on_new_order')
+        socketService.socket.off('on_new_order_history')
+      }
     }
   }, [socketService.socket])
 
   return (
-    <div className="h-full w-full rounded-xl p-0 shadow-xl lg:min-w-[300px] lg:max-w-[320px]">
-      <h2 className="text-md text-center font-semibold text-yellow-500 lg:text-lg">
+    <div className="h-full w-full rounded-xl p-0 border-t shadow-lg lg:min-w-[300px] lg:max-w-[320px]">
+      <h2 className="my-1 lg:my-2 text-md text-center font-semibold text-yellow-500 lg:text-lg">
         Total Reward: {totalReward}
       </h2>
-      <hr className="mt-1 mb-2 lg:my-3" />
+      <hr className="mt-1 mb-2 lg:mb-3" />
       <div>
         <Tab.Group>
           <Tab.List className="tabs justify-center">
@@ -97,7 +97,7 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
                 </tbody>
               </table>
             </Tab.Panel>
-            <Tab.Panel className="max-h-56 w-[calc(100%+8px)] overflow-y-auto pr-[8px] lg:max-h-[calc(100vh-250px)]">
+            <Tab.Panel className="max-h-56 w-[calc(100%+8px)] overflow-y-auto pr-[8px] lg:max-h-[calc(100vh-260px)]">
               <table className="table-compact box-border table w-full">
                 <thead>
                   <tr>

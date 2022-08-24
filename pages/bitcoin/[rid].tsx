@@ -25,7 +25,9 @@ export interface IRoomData {
 const Room: NextPageWithLayout = () => {
   const router = useRouter()
   const { rid } = router.query
-  const { data: roomData } = useSWR<IRoomData>(rid ? '/rooms/' + rid : null, { revalidateOnFocus: false })
+  const { data: roomData } = useSWR<IRoomData>(rid ? '/rooms/' + rid : null, {
+    revalidateOnFocus: false,
+  })
   const [isJoining, setJoining] = useState(false)
   const [participants, setParticipants] = useState(1)
   const { setInRoom, isInRoom } = useContext(gameContext)
@@ -47,10 +49,6 @@ const Room: NextPageWithLayout = () => {
       })
 
     if (leaved) {
-      if (socketService.socket) {
-        socketService.socket.off('on_new_order')
-        socketService.socket.off('on_new_order_history')
-      }
       setInRoom(false)
       router.push('/bitcoin')
     }
@@ -104,10 +102,9 @@ const Room: NextPageWithLayout = () => {
         toast.success(`+${amount} token`, { duration: 3000 })
         mutateBalance()
         const winAmount = amount - (roomData?.amount || 0)
-        setTotalReward((preAmount) => preAmount += winAmount)
-      }
-      else if (result === 2) {
-        setTotalReward((preAmount) => preAmount -= amount )
+        setTotalReward((preAmount) => (preAmount += winAmount))
+      } else if (result === 2) {
+        setTotalReward((preAmount) => (preAmount -= amount))
       }
     })
     gameService.onCountUser(socket, (count) => {
@@ -126,22 +123,24 @@ const Room: NextPageWithLayout = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-start lg:justify-between gap-6 lg:flex-row h-full">
-        <div className="relative w-full space-y-2 px-2 pt-0 lg:w-[250px] lg:space-y-4 lg:pt-2 -mt-1.5 lg:mt-0">
-          <div className="absolute right-0 top-1 lg:left-0 lg:top-2">
+      <div className="flex h-full flex-col justify-start gap-5 lg:gap-6 lg:flex-row lg:justify-between">
+        <div className="relative px-2 -mt-1.5 w-full pt-0 lg:mt-0 lg:w-[280px]">
+          <div className="absolute right-0 top-1.5 lg:left-0 lg:top-0">
             <FontAwesomeIcon
               onClick={leaveRoom}
               className="cursor-pointer text-3xl lg:text-4xl"
               icon={faCircleChevronLeft}
             />
           </div>
-          <div className="grid grid-cols-2 text-sm font-semibold lg:grid-cols-1 lg:pt-8 lg:text-base">
-            <span>Room {rid}</span>
-            <span>Time: {roomData?.time}m</span>
-            <span>Amount: {roomData?.amount} token</span>
-            <span>
-              Players: {participants}/{roomData?.maxPlayer}
-            </span>
+          <div className="pt-2 lg:pt-12">
+            <div className="grid grid-cols-2 lg:gap-1 text-sm font-semibold lg:grid-cols-1 lg:text-base">
+              <span>Room: {rid}</span>
+              <span>Time: {roomData?.time}m</span>
+              <span>Amount: {roomData?.amount} token</span>
+              <span>
+                Players: {participants}/{roomData?.maxPlayer}
+              </span>
+            </div>
           </div>
         </div>
         {roomData && (

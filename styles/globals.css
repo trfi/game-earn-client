@@ -25,6 +25,10 @@ h1.title {
   font-size: 0.6rem;
 }
 
+/* .table :where(th, td):first-child, .table :where(th, td):last-child {
+  border-radius: 0;
+} */
+
 /* End table */
 
 .card {

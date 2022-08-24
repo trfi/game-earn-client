@@ -17,8 +17,9 @@ const TradingViewChart = React.memo(({ roomData }: Props) => {
   }
 
   return (
-    <div className="-mt-3 w-full max-w-screen-lg text-center lg:mt-0">
-      <div id="chart" className="h-[30vh] rounded-lg lg:h-[60vh]">
+    <div className="-mt-2.5 lg:mt-0 w-full max-w-screen-lg text-center">
+      <div className='lg:p-2 lg:bg-[#181c27] lg:rounded-xl'>
+      <div id="chart" className="h-[30vh] lg:h-[60vh] -mx-2 lg:-mx-0">
         <AdvancedRealTimeChart
           autosize
           hide_side_toolbar
@@ -35,6 +36,7 @@ const TradingViewChart = React.memo(({ roomData }: Props) => {
           symbol="BINANCE:BTCUSDT"
           copyrightStyles={chartStyles}
         ></AdvancedRealTimeChart>
+      </div>
       </div>
       <code className="text-xs font-bold lg:text-sm">BTC/USDT</code>
       <Order roomData={roomData} />

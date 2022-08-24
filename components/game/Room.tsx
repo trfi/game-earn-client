@@ -24,9 +24,9 @@ const Room = ({ room }: RoomProps) => {
       <td>
         <label className='font-semibold text-xs'>{room.id}</label>
       </td>
-      <td>{room.time}m</td>
-      <td>{room.participants}</td>
-      <td>{room.amount}</td>
+      <td><div className="badge badge-outline badge-warning">{room.time}m</div></td>
+      <td><div className="badge badge-warning">{room.participants}</div></td>
+      <td><div className="badge badge-primary">{room.amount}</div></td>
       {/* <td>{room.isLock && <FontAwesomeIcon size="1x" icon={faLock} />}</td> */}
       <td>
         {room?.password ? (

@@ -64,7 +64,7 @@ export function GameLayout({ children }: LayoutProps) {
             </div> */}
           </div>
           <div className="h-screen pt-[65px] lg:pt-[72px]">
-            <div className="p-2 md:p-4 lg:pt-8 lg:px-4 2xl:p-10 h-full">{children}</div>
+            <div className="p-2 md:p-4 lg:py-8 lg:px-4 2xl:p-10 h-full">{children}</div>
           </div>
         </div>
       </>
