@@ -17,7 +17,7 @@ const TradingViewChart = React.memo(({ roomData }: Props) => {
   }
 
   return (
-    <div className="-mt-2 w-full max-w-screen-lg text-center lg:mt-0">
+    <div className="-mt-3 w-full max-w-screen-lg text-center lg:mt-0">
       <div id="chart" className="h-[30vh] rounded-lg lg:h-[60vh]">
         <AdvancedRealTimeChart
           autosize

@@ -13,7 +13,6 @@ import ListOrder from '@/components/game/RightPanel/ListOrder'
 import { useAuth } from '@/hooks'
 import { DefaultEventsMap } from '@socket.io/component-emitter'
 import { Socket } from 'socket.io-client'
-import Order from '@/components/game/Order'
 import TradingViewChart from '@/components/game/TradingViewChart'
 
 export interface IRoomData {
@@ -49,6 +48,10 @@ const Room: NextPageWithLayout = () => {
       })
 
     if (leaved) {
+      if (socketService.socket) {
+        socketService.socket.off('on_new_order')
+        socketService.socket.off('on_new_order_history')
+      }
       setInRoom(false)
       router.push('/bitcoin')
     }

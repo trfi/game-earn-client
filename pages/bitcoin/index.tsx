@@ -28,7 +28,6 @@ const BitcoinGame: NextPageWithLayout = () => {
           Create room
         </label> */}
         <div className="mx-auto w-full max-w-screen-lg rounded-xl border-2 lg:border-4 border-primary p-2 lg:p-6">
-          <h4 className="mb-3 lg:mb-6 text-center font-bold">Room List</h4>
           <Rooms />
         </div>
       </div>

@@ -15,6 +15,7 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
   let titles = ['Orders', 'Histories']
 
   useEffect(() => {
+    let isMounted = true
     if (socketService.socket) {
       gameService.onNewOrder(socketService.socket, (data) => {
         mutate((prev: any) => [data, ...prev])
@@ -24,17 +25,18 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
       })
     }
     return () => {
-      if (socketService.socket) {
-        socketService.socket.off('on_new_order')
-        socketService.socket.off('on_new_order_history')
-      }
+      isMounted = false
+      // if (socketService.socket) {
+      //   socketService.socket.off('on_new_order')
+      //   socketService.socket.off('on_new_order_history')
+      // }
     }
   }, [socketService.socket])
 
   return (
     <div className="h-full w-full rounded-xl p-0 shadow-xl lg:min-w-[300px] lg:max-w-[320px]">
       <h2 className="text-md text-center font-semibold text-yellow-500 lg:text-lg">
-        Total Reward {totalReward}
+        Total Reward: {totalReward}
       </h2>
       <hr className="mt-1 mb-2 lg:my-3" />
       <div>
@@ -114,7 +116,7 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
                           </td>
                           <td>
                             <div className="badge badge-sm badge-primary">
-                              {h.price}
+                              {h.price == 0 ? '--' : h.price}
                             </div>
                           </td>
                           <td>
@@ -132,28 +134,13 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
                                   : 'badge-warning'
                               }`}
                             >
-                              {h.amount > 0 ? '+' + h.amount : h.amount}
+                              {h.amount == 0
+                                ? '--'
+                                : h.amount > 0
+                                ? '+' + h.amount
+                                : h.amount}
                             </div>
                           </td>
-                          {/* <td className="text-right">
-                            {
-                              <div
-                                className={`badge ${
-                                  h.result == 1
-                                    ? 'badge-accent'
-                                    : h.result == 2
-                                    ? 'badge-error'
-                                    : ''
-                                }`}
-                              >
-                                {h.result == 1
-                                  ? 'Victory'
-                                  : h.result == 2
-                                  ? 'Lose'
-                                  : '---'}
-                              </div>
-                            }
-                          </td> */}
                         </tr>
                       )
                   )}
