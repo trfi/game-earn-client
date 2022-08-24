@@ -6,6 +6,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'green-1': '#06c8b5',
+        'red-1': '#fd5966'
       },
       fontFamily: {
         airstrike: ['Airstrike Academy'],
@@ -26,17 +28,17 @@ module.exports = {
     themes: [
       {
         light: {
-          ...require("daisyui/src/colors/themes")["[data-theme=light]"],
+          ...require('daisyui/src/colors/themes')['[data-theme=light]'],
           // 'base-100': '#f5faff',
           // 'base-200': '#529baa',
           // 'base-300': '#eefcff',
-          'primary': '#008aa6',
-          'secondary': '#e1b400',
-          'neutral': '#2a4561',
+          primary: '#008aa6',
+          secondary: '#e1b400',
+          neutral: '#2a4561',
           'accent-content': '#ebfffd',
           'warning-content': '#ffffff',
-          'error-content': '#ffffff'
-        }
+          'error-content': '#ffffff',
+        },
       },
       {
         pro: {

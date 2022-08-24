@@ -19,6 +19,7 @@ const Order = ({ roomData }: Props) => {
   let [isDisableOrder, setIsDisableOrder] = useState(false)
   let [isOrdered, setIsOrdered] = useState(false)
   const { mutate: mutateBalance } = useSWR('/wallet/balance')
+  const { mutate: mutateOrders } = useSWR(roomData?.id ? '/orders/' + roomData.id: null, { revalidateOnFocus: false })
 
   async function handleOrder(e: any) {
     e.preventDefault()
@@ -55,7 +56,11 @@ const Order = ({ roomData }: Props) => {
         if (!isOrdered) order(0)
         setIsDisableOrder(true)
       } else {
-        if (isDisableOrder) setIsOrdered(false)
+        if (isDisableOrder) {
+          
+          mutateOrders([])
+          setIsOrdered(false)
+        }
         setIsDisableOrder(false)
       }
     }, 1000)
@@ -67,7 +72,7 @@ const Order = ({ roomData }: Props) => {
 
   return (
     <div className="mt-2 lg:mt-8 flex flex-col items-center justify-center gap-3 lg:flex-row lg:gap-6">
-      <div className={`rounded-lg border-2 px-6 py-0 text-lg font-bold lg:py-1.5 lg:text-2xl ${isDisableOrder ? 'border-red-500 text-red-500' : 'border-primary text-primary'}`}>
+      <div className={`rounded-lg border-2 px-6 py-0 text-lg font-bold lg:py-1.5 lg:text-2xl ${isDisableOrder ? 'border-red-1 text-red-1' : 'border-green-1 text-green-1'}`}>
         00:{String(serverDate).padStart(2, '0')}
       </div>
       <form onSubmit={handleOrder}>
@@ -82,7 +87,7 @@ const Order = ({ roomData }: Props) => {
         />
         <button
           disabled={isDisableOrder}
-          className="btn btn-accent btn-sm lg:btn-md"
+          className="btn btn-primary btn-sm lg:btn-md"
         >
           Ready
         </button>

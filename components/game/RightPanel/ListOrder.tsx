@@ -10,7 +10,9 @@ interface Props {
 }
 
 const ListOrder = ({ roomId, totalReward }: Props) => {
-  const { data: orders, mutate } = useSWR(roomId ? '/orders/' + roomId : null)
+  const { data: orders, mutate: mutateOrder } = useSWR(roomId ? '/orders/' + roomId : null)
+  // const [orders, setOrders] = useState<Object[]>([])
+  const { mutate: mutateBalance } = useSWR('/wallet/balance')
   const [histories, setHistories] = useState<Object[]>([])
   let titles = ['Orders', 'Histories']
 
@@ -18,10 +20,14 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
     let isMounted = true
     if (socketService.socket) {
       gameService.onNewOrder(socketService.socket, (data) => {
-        mutate((prev: any) => [data, ...prev])
+        mutateOrder((prev: any) => [data, ...prev])
       })
       gameService.onNewOrderHistory(socketService.socket, (data) => {
         setHistories((prev) => [data, ...prev])
+        if (data.one) {
+          mutateOrder()
+          mutateBalance()
+        }
       })
     }
     return () => {

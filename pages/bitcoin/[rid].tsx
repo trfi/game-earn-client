@@ -25,11 +25,10 @@ export interface IRoomData {
 const Room: NextPageWithLayout = () => {
   const router = useRouter()
   const { rid } = router.query
-  const { data: roomData } = useSWR<IRoomData>(rid ? '/rooms/' + rid : null)
+  const { data: roomData } = useSWR<IRoomData>(rid ? '/rooms/' + rid : null, { revalidateOnFocus: false })
   const [isJoining, setJoining] = useState(false)
   const [participants, setParticipants] = useState(1)
   const { setInRoom, isInRoom } = useContext(gameContext)
-  const { mutate: mutateOrders } = useSWR(roomData?.id ? '/orders/' + roomData.id: null)
   const { user } = useAuth()
   const { mutate: mutateBalance } = useSWR('/wallet/balance')
   const [totalReward, setTotalReward] = useState(0)
@@ -101,15 +100,15 @@ const Room: NextPageWithLayout = () => {
     gameService.onOrderResult(socket, ({ result, amount }) => {
       console.log('orderResult', result, amount)
       if (result === 1) {
-        mutateBalance()
-        toast.success(`+${amount} token`, { duration: 3000 })
         showResult()
-        setTotalReward((preAmount) => preAmount += amount )
+        toast.success(`+${amount} token`, { duration: 3000 })
+        mutateBalance()
+        const winAmount = amount - (roomData?.amount || 0)
+        setTotalReward((preAmount) => preAmount += winAmount)
       }
       else if (result === 2) {
         setTotalReward((preAmount) => preAmount -= amount )
       }
-      mutateOrders()
     })
     gameService.onCountUser(socket, (count) => {
       setParticipants(count)
@@ -123,7 +122,7 @@ const Room: NextPageWithLayout = () => {
         socketService.socket.off('on_order_result')
       }
     }
-  }, [socketService.socket, rid, user])
+  }, [socketService.socket, rid, user, roomData])
 
   return (
     <>
