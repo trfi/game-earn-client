@@ -60,7 +60,7 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
             ))}
           </Tab.List>
           <Tab.Panels className="mt-2">
-            <Tab.Panel className="max-h-56 w-[calc(100%+8px)] overflow-y-scroll lg:max-h-[calc(100vh-260px)]">
+            <Tab.Panel className="max-h-56 w-[calc(100%+6px)] overflow-y-scroll lg:max-h-[calc(100vh-260px)] scroll">
               <table className="table-compact table w-full">
                 <thead>
                   <tr>
@@ -97,7 +97,7 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
                 </tbody>
               </table>
             </Tab.Panel>
-            <Tab.Panel className="max-h-56 w-[calc(100%+8px)] overflow-y-scroll lg:max-h-[calc(100vh-260px)]">
+            <Tab.Panel className="max-h-56 w-[calc(100%+6px)] overflow-y-scroll lg:max-h-[calc(100vh-260px)] scroll">
               <table className="table-compact table w-full">
                 <thead>
                   <tr>
