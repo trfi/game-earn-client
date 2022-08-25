@@ -40,7 +40,7 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
   }, [socketService.socket])
 
   return (
-    <div className="h-full w-full rounded-xl p-0 border-t shadow-lg lg:min-w-[300px] lg:max-w-[320px]">
+    <div className="h-full w-full rounded-xl p-0 lg:border-t shadow-lg lg:min-w-[300px] lg:max-w-[320px]">
       <h2 className="my-1 lg:my-2 text-md text-center font-semibold text-yellow-500 lg:text-lg">
         Total Reward: {totalReward}
       </h2>
@@ -60,7 +60,7 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
             ))}
           </Tab.List>
           <Tab.Panels className="mt-2">
-            <Tab.Panel>
+            <Tab.Panel className="max-h-56 w-[calc(100%+8px)] overflow-y-scroll lg:max-h-[calc(100vh-260px)]">
               <table className="table-compact table w-full">
                 <thead>
                   <tr>
@@ -97,8 +97,8 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
                 </tbody>
               </table>
             </Tab.Panel>
-            <Tab.Panel className="max-h-56 w-[calc(100%+8px)] overflow-y-auto pr-[8px] lg:max-h-[calc(100vh-260px)]">
-              <table className="table-compact box-border table w-full">
+            <Tab.Panel className="max-h-56 w-[calc(100%+8px)] overflow-y-scroll lg:max-h-[calc(100vh-260px)]">
+              <table className="table-compact table w-full">
                 <thead>
                   <tr>
                     <th>Time</th>

@@ -2,7 +2,14 @@ import { useRouter } from 'next/router'
 import { NextPageWithLayout } from '@/models'
 import { GameLayout } from '@/components/layouts/Game'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCircleChevronLeft,
+  faClock,
+  faCoins,
+  faPersonChalkboard,
+  faTimesCircle,
+  faUserGroup,
+} from '@fortawesome/free-solid-svg-icons'
 import toast from 'react-hot-toast'
 import gameService from '@/services/gameService'
 import socketService from '@/services/socketService'
@@ -123,8 +130,8 @@ const Room: NextPageWithLayout = () => {
 
   return (
     <>
-      <div className="flex h-full flex-col justify-start gap-5 lg:gap-6 lg:flex-row lg:justify-between">
-        <div className="relative px-2 -mt-1.5 w-full pt-0 lg:mt-0 lg:w-[280px]">
+      <div className="flex h-full flex-col justify-start gap-5 lg:flex-row lg:justify-between lg:gap-6">
+        <div className="relative -mt-1.5 w-full px-2 pt-0 lg:mt-0 lg:w-[280px]">
           <div className="absolute right-0 top-1.5 lg:left-0 lg:top-0">
             <FontAwesomeIcon
               onClick={leaveRoom}
@@ -132,14 +139,26 @@ const Room: NextPageWithLayout = () => {
               icon={faCircleChevronLeft}
             />
           </div>
-          <div className="pt-2 lg:pt-12">
-            <div className="grid grid-cols-2 lg:gap-1 text-sm font-semibold lg:grid-cols-1 lg:text-base">
-              <span>Room: {rid}</span>
-              <span>Time: {roomData?.time}m</span>
-              <span>Amount: {roomData?.amount} token</span>
+          <div className="pt-2 lg:pt-14">
+            <div className="grid grid-cols-2 text-sm font-semibold lg:grid-cols-1 lg:gap-2.5 lg:text-base">
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon width={22} icon={faPersonChalkboard} />
+                <span>Room: {rid}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon width={22} icon={faClock} />
+                <span>Time: {roomData?.time}m</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <FontAwesomeIcon width={22} icon={faCoins} />
+                <span> Amount: {roomData?.amount} token</span>
+              </div>
+              <div className="flex items-center gap-2">
+              <FontAwesomeIcon width={22} icon={faUserGroup} />
               <span>
                 Players: {participants}/{roomData?.maxPlayer}
               </span>
+              </div>
             </div>
           </div>
         </div>
