@@ -3,18 +3,37 @@ import useSWR from 'swr'
 import gameService from '@/services/gameService'
 import socketService from '@/services/socketService'
 import { Tab } from '@headlessui/react'
-
+import axiosClient from '@/api/axios-client'
+interface IMessage {
+  roomId: string
+  username: string
+  content: string
+}
 interface Props {
   roomId: string
   totalReward: number
 }
 
+let titles = ['Orders', 'Histories', 'Chat']
+
 const ListOrder = ({ roomId, totalReward }: Props) => {
-  const { data: orders, mutate: mutateOrder } = useSWR(roomId ? '/orders/' + roomId : null)
-  // const [orders, setOrders] = useState<Object[]>([])
+  const { data: orders, mutate: mutateOrder } = useSWR(
+    roomId ? '/orders/' + roomId : null
+  )
   const { mutate: mutateBalance } = useSWR('/wallet/balance')
   const [histories, setHistories] = useState<Object[]>([])
-  let titles = ['Orders', 'Histories']
+  const [messages, setMessages] = useState<IMessage[]>([])
+
+  const handleSendMessage = (e: any) => {
+    e.preventDefault()
+    const inputMessage = e.target.message
+    axiosClient.post('/chat', {
+      roomId,
+      content: inputMessage.value,
+    })
+    inputMessage.value = ''
+    inputMessage.focus()
+  }
 
   useEffect(() => {
     let isMounted = true
@@ -29,19 +48,24 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
           mutateBalance()
         }
       })
+      gameService.onChatMessage(socketService.socket, (data: IMessage) => {
+        console.log(data)
+        setMessages((prev) => [...prev, data])
+      })
     }
     return () => {
       isMounted = false
       if (socketService.socket) {
         socketService.socket.off('on_new_order')
         socketService.socket.off('on_new_order_history')
+        socketService.socket.off('on_chat_message')
       }
     }
-  }, [socketService.socket])
+  }, [])
 
   return (
-    <div className="h-full w-full rounded-xl p-0 lg:border-t shadow-lg lg:min-w-[300px] lg:max-w-[320px]">
-      <h2 className="my-1 lg:my-2 text-md text-center font-semibold text-yellow-500 lg:text-lg">
+    <div className="relative h-full w-full rounded-xl p-0 shadow-lg lg:min-w-[300px] lg:max-w-[320px] lg:border-t">
+      <h2 className="text-md my-1 text-center font-semibold text-yellow-500 lg:my-2 lg:text-lg">
         Total Reward: {totalReward}
       </h2>
       <hr className="mt-1 mb-2 lg:mb-3" />
@@ -60,7 +84,7 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
             ))}
           </Tab.List>
           <Tab.Panels className="mt-2">
-            <Tab.Panel className="max-h-56 w-[calc(100%+6px)] overflow-y-scroll lg:max-h-[calc(100vh-260px)] scroll">
+            <Tab.Panel className="scroll max-h-56 w-[calc(100%+6px)] overflow-y-scroll lg:max-h-[calc(100vh-260px)]">
               <table className="table-compact table w-full">
                 <thead>
                   <tr>
@@ -97,7 +121,7 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
                 </tbody>
               </table>
             </Tab.Panel>
-            <Tab.Panel className="max-h-56 w-[calc(100%+6px)] overflow-y-scroll lg:max-h-[calc(100vh-260px)] scroll">
+            <Tab.Panel className="scroll max-h-56 w-[calc(100%+6px)] overflow-y-scroll lg:max-h-[calc(100vh-260px)]">
               <table className="table-compact table w-full">
                 <thead>
                   <tr>
@@ -152,6 +176,30 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
                   )}
                 </tbody>
               </table>
+            </Tab.Panel>
+            <Tab.Panel className="scroll max-h-56 w-[calc(100%+6px)] overflow-y-scroll lg:max-h-[calc(100vh-260px)]">
+              <div className="flex h-full flex-col justify-between pt-4 px-4 pb-10">
+                <div className='space-y-2 text-sm'>
+                  {messages.map((message, idx) => (
+                    <div key={idx}>
+                      <span className='font-semibold'>{message.username}</span>: {message.content}
+                    </div>
+                  ))}
+                </div>
+                <form
+                  className="absolute bottom-2 lg:bottom-4 gap-2 bg-white pt-1 flex w-full items-end justify-center left-1/2 transform -translate-x-1/2"
+                  onSubmit={handleSendMessage}
+                >
+                  <input
+                    required
+                    className="input input-primary input-sm"
+                    name="message"
+                    type="text"
+                    placeholder="Message"
+                  />
+                  <button className="btn btn-primary btn-sm">Send</button>
+                </form>
+              </div>
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>

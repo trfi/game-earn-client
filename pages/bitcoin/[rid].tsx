@@ -3,17 +3,12 @@ import { NextPageWithLayout } from '@/models'
 import { GameLayout } from '@/components/layouts/Game'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faCircleChevronLeft,
-  faClock,
-  faCoins,
-  faPersonChalkboard,
-  faTimesCircle,
-  faUserGroup,
+  faCircleChevronLeft
 } from '@fortawesome/free-solid-svg-icons'
 import toast from 'react-hot-toast'
 import gameService from '@/services/gameService'
 import socketService from '@/services/socketService'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { Ref, useContext, useEffect, useRef, useState } from 'react'
 import gameContext from '@/contexts/gameContext'
 import useSWR from 'swr'
 import ListOrder from '@/components/game/RightPanel/ListOrder'
@@ -21,6 +16,8 @@ import { useAuth } from '@/hooks'
 import { DefaultEventsMap } from '@socket.io/component-emitter'
 import { Socket } from 'socket.io-client'
 import TradingViewChart from '@/components/game/TradingViewChart'
+import RoomInfo from '@/components/game/LeftPanel/RoomInfo'
+import VictoryNoti, { VictoryNotiHandle } from '@/components/game/VictoryNoti'
 
 export interface IRoomData {
   id: string
@@ -41,6 +38,7 @@ const Room: NextPageWithLayout = () => {
   const { user } = useAuth()
   const { mutate: mutateBalance } = useSWR('/wallet/balance')
   const [totalReward, setTotalReward] = useState(0)
+  const victoryNoti = useRef<VictoryNotiHandle>(null)
 
   const leaveRoom = async (e: React.FormEvent) => {
     const socket = socketService.socket
@@ -89,29 +87,19 @@ const Room: NextPageWithLayout = () => {
     handleGameResutl(socket)
   }
 
-  function showResult() {
-    const x = document.getElementById('snackbar')
-    if (x) {
-      x.className = 'show'
-      setTimeout(function () {
-        x.className = x.className.replace('show', '')
-      }, 3000)
-    }
-  }
-
   const handleGameResutl = (
     socket: Socket<DefaultEventsMap, DefaultEventsMap>
   ) => {
     gameService.onOrderResult(socket, ({ result, amount }) => {
       console.log('orderResult', result, amount)
       if (result === 1) {
-        showResult()
+        victoryNoti?.current?.show()
         toast.success(`+${amount} token`, { duration: 3000 })
         mutateBalance()
         const winAmount = amount - (roomData?.amount || 0)
-        setTotalReward((preAmount) => (preAmount += winAmount))
+        setTotalReward((preAmount) => preAmount + winAmount)
       } else if (result === 2) {
-        setTotalReward((preAmount) => (preAmount -= amount))
+        setTotalReward((preAmount) => preAmount - amount)
       }
     })
     gameService.onCountUser(socket, (count) => {
@@ -120,13 +108,14 @@ const Room: NextPageWithLayout = () => {
   }
 
   useEffect(() => {
+    console.log('socketService.socket?.connected', socketService.socket?.connected);
     joinRoom()
     return () => {
       if (socketService.socket) {
         socketService.socket.off('on_order_result')
       }
     }
-  }, [socketService.socket, rid, user, roomData])
+  }, [socketService.socket?.connected])
 
   return (
     <>
@@ -139,28 +128,7 @@ const Room: NextPageWithLayout = () => {
               icon={faCircleChevronLeft}
             />
           </div>
-          <div className="pt-2 lg:pt-14">
-            <div className="grid grid-cols-2 text-sm font-semibold lg:grid-cols-1 lg:gap-2.5 lg:text-base">
-              <div className="flex items-center gap-1 lg:gap-2">
-                <FontAwesomeIcon width={22} icon={faPersonChalkboard} />
-                <span>Room: {rid}</span>
-              </div>
-              <div className="flex items-center gap-1 lg:gap-2">
-                <FontAwesomeIcon width={22} icon={faClock} />
-                <span>Time: {roomData?.time}m</span>
-              </div>
-              <div className="flex items-center gap-1 lg:gap-2">
-                <FontAwesomeIcon width={22} icon={faCoins} />
-                <span> Amount: {roomData?.amount} token</span>
-              </div>
-              <div className="flex items-center gap-1 lg:gap-2">
-              <FontAwesomeIcon width={22} icon={faUserGroup} />
-              <span>
-                Players: {participants}/{roomData?.maxPlayer}
-              </span>
-              </div>
-            </div>
-          </div>
+          <RoomInfo roomData={roomData} participants={participants} />
         </div>
         {roomData && (
           <>
@@ -170,14 +138,7 @@ const Room: NextPageWithLayout = () => {
         )}
       </div>
 
-      <div id="snackbar">
-        <img
-          className="mx-auto"
-          width={300}
-          src="/images/victory.webp"
-          alt="victory"
-        />
-      </div>
+      <VictoryNoti ref={victoryNoti} />
     </>
   )
 }

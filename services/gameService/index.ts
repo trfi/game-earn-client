@@ -1,5 +1,6 @@
 import { Socket } from 'socket.io-client'
 import { IOrder, IPlayMatrix, IStartGame } from '@/components/gamet'
+import { IMessage } from '@/components/game/RightPanel/Chat'
 
 class GameService {
   public async joinGameRoom(socket: Socket, roomId: string): Promise<boolean> {
@@ -29,6 +30,7 @@ class GameService {
     socket.emit('new_order', data)
   }
 
+
   public async updateGame(socket: Socket, gameMatrix: IPlayMatrix) {
     socket.emit('update_game', { matrix: gameMatrix })
   }
@@ -36,6 +38,15 @@ class GameService {
   public async onNewOrder(socket: Socket, listiner: (message: any) => void) {
     console.log('listen new order');
     socket.on('on_new_order', (message) => listiner(message))
+  }
+
+  public async sendMessage(socket: Socket, data: IMessage) {
+    socket.emit('chat_message', data)
+  }
+
+  public async onChatMessage(socket: Socket, listiner: (message: any) => void) {
+    console.log('listen chat message');
+    socket.on('on_chat_message', (message) => listiner(message))
   }
 
   public async onNewOrderHistory(socket: Socket, listiner: (message: any) => void) {
