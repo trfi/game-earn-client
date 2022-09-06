@@ -26,17 +26,15 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
 
   const handleSendMessage = (e: any) => {
     e.preventDefault()
-    const inputMessage = e.target.message
     axiosClient.post('/chat', {
       roomId,
-      content: inputMessage.value,
+      content: e.target.message.value,
     })
-    inputMessage.value = ''
-    inputMessage.focus()
+    e.target.message.value = ''
   }
 
   useEffect(() => {
-    let isMounted = true
+    console.log('socketService.socket?.connected', socketService.socket?.connected);
     if (socketService.socket) {
       gameService.onNewOrder(socketService.socket, (data) => {
         mutateOrder((prev: any) => [data, ...prev])
@@ -49,19 +47,17 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
         }
       })
       gameService.onChatMessage(socketService.socket, (data: IMessage) => {
-        console.log(data)
         setMessages((prev) => [...prev, data])
       })
     }
     return () => {
-      isMounted = false
       if (socketService.socket) {
         socketService.socket.off('on_new_order')
         socketService.socket.off('on_new_order_history')
         socketService.socket.off('on_chat_message')
       }
     }
-  }, [])
+  }, [socketService.socket?.connected])
 
   return (
     <div className="relative h-full w-full rounded-xl p-0 shadow-lg lg:min-w-[300px] lg:max-w-[320px] lg:border-t">
@@ -187,7 +183,7 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
                   ))}
                 </div>
                 <form
-                  className="absolute bottom-2 lg:bottom-4 gap-2 bg-white pt-1 flex w-full items-end justify-center left-1/2 transform -translate-x-1/2"
+                  className="absolute bottom-3 lg:bottom-4 gap-2 bg-white pt-1 flex w-full items-end justify-center left-1/2 transform -translate-x-1/2"
                   onSubmit={handleSendMessage}
                 >
                   <input
@@ -207,4 +203,5 @@ const ListOrder = ({ roomId, totalReward }: Props) => {
     </div>
   )
 }
+
 export default ListOrder

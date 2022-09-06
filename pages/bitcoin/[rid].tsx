@@ -108,7 +108,6 @@ const Room: NextPageWithLayout = () => {
   }
 
   useEffect(() => {
-    console.log('socketService.socket?.connected', socketService.socket?.connected);
     joinRoom()
     return () => {
       if (socketService.socket) {

@@ -16,6 +16,7 @@ interface UserInfo {
   withdrawalInfo: { payAddress: string, payNetwork: string }
   username: string
   firstExchange: boolean
+  shareholderLevel: number
   role: number
   id: string
 }

@@ -6,6 +6,7 @@ import { faCopy } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '@/hooks'
 import toast from 'react-hot-toast'
 import { Disclosure } from '@headlessui/react'
+import Shareholder from '@/components/referral/Shareholder'
 
 const Referral: NextPageWithLayout = () => {
   const { user } = useAuth()
@@ -21,8 +22,9 @@ const Referral: NextPageWithLayout = () => {
 
   return (
     <div className="w-full">
-      <div className="my-8 flex flex-col items-center">
-        <h2 className="text-xl font-semibold">My referral link:</h2> <br />
+      <div className="my-4 flex flex-col items-center">
+        <Shareholder />
+        <h2 className="text-xl font-semibold mt-8 mb-2">My referral link:</h2>
         <div className="form-control w-full max-w-xl">
           <div className="input-group text-gray-500">
             <input
@@ -39,7 +41,7 @@ const Referral: NextPageWithLayout = () => {
       </div>
       <TreeList />
 
-      <div className="mt-10 flex flex-col items-center">
+      {/* <div className="mt-10 flex flex-col items-center">
         <Disclosure defaultOpen={false}>
           <p>
             Get commission for referring players
@@ -56,7 +58,7 @@ const Referral: NextPageWithLayout = () => {
             />
           </Disclosure.Panel>
         </Disclosure>
-      </div>
+      </div> */}
     </div>
   )
 }
