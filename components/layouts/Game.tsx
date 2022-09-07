@@ -8,18 +8,13 @@ import { useAuth } from '@/hooks'
 import useSWR from 'swr'
 import { useRecoilState } from 'recoil'
 import { walletTypeState } from '@/atoms'
+import { formatCurrency } from '@/utils/format'
 
 export function GameLayout({ children }: LayoutProps) {
   const [mute, setMute] = useState(false)
   const { user } = useAuth()
   const { data: balance } = useSWR('/wallet/balance')
   const [walletType, setWalletType] = useRecoilState(walletTypeState)
-
-  const formatCurrency = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumSignificantDigits: 1
-  });
 
   function handleVolume() {
     setMute(!mute)

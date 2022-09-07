@@ -6,19 +6,14 @@ import {
   faUserGroup,
 } from '@fortawesome/free-solid-svg-icons'
 import { IRoomData } from '@/pages/bitcoin/[rid]'
+import { formatCurrency } from '@/utils/format'
 
 interface Props {
-  roomData: IRoomData | undefined,
+  roomData: IRoomData | undefined
   participants: number
 }
 
 const RoomInfo = ({ roomData, participants }: Props) => {
-  const formatCurrency = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumSignificantDigits: 1
-  });
-
   return (
     <div className="pt-2 lg:pt-14">
       <div className="grid grid-cols-2 text-sm font-semibold lg:grid-cols-1 lg:gap-2.5 lg:text-base">
