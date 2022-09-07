@@ -13,6 +13,12 @@ interface Props {
 }
 
 const RoomInfo = ({ roomData, participants }: Props) => {
+  const formatCurrency = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumSignificantDigits: 1
+  });
+
   return (
     <div className="pt-2 lg:pt-14">
       <div className="grid grid-cols-2 text-sm font-semibold lg:grid-cols-1 lg:gap-2.5 lg:text-base">
@@ -26,7 +32,7 @@ const RoomInfo = ({ roomData, participants }: Props) => {
         </div>
         <div className="flex items-center gap-1 lg:gap-2">
           <FontAwesomeIcon width={22} icon={faCoins} />
-          <span> Amount: {roomData?.amount} token</span>
+          <span> Amount: {formatCurrency.format(roomData?.amount || 0)}</span>
         </div>
         <div className="flex items-center gap-1 lg:gap-2">
           <FontAwesomeIcon width={22} icon={faUserGroup} />
@@ -38,4 +44,5 @@ const RoomInfo = ({ roomData, participants }: Props) => {
     </div>
   )
 }
+
 export default RoomInfo

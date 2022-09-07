@@ -15,6 +15,12 @@ export function GameLayout({ children }: LayoutProps) {
   const { data: balance } = useSWR('/wallet/balance')
   const [walletType, setWalletType] = useRecoilState(walletTypeState)
 
+  const formatCurrency = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumSignificantDigits: 1
+  });
+
   function handleVolume() {
     setMute(!mute)
   }
@@ -40,7 +46,7 @@ export function GameLayout({ children }: LayoutProps) {
                   <option value="live">Live Balance</option>
                   <option value="demo">Demo Balance</option>
                 </select>
-                <code className="ml-2">{walletType == 'live' ? balance?.balance : balance?.demoBalance} token</code>
+                <code className="ml-2">{formatCurrency.format(walletType == 'live' ? balance?.balance : balance?.demoBalance)}</code>
               </div>
               <Link href="/user">
                 <div className="avatar placeholder z-10 cursor-pointer mr-1">
