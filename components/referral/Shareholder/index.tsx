@@ -1,21 +1,25 @@
 import axiosClient from '@/api/axios-client'
 import { useAuth } from '@/hooks'
+import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
 
 const Shareholder = () => {
   const { user, mutate } = useAuth()
+  const router = useRouter()
+  const byShareholderLevelUp = user?.byShareholder?.shareholderLevel + 1 || 1
 
   const upgradeShareholder = async () => {
     const data = {
-      level: 1,
+      level: byShareholderLevelUp,
     }
     try {
       await axiosClient.post('/users/shareholder', data)
       mutate()
       toast.success('Upgrade Shareholder Success')
-      mutate
+      
     } catch (err: any) {
       toast.error(err.message)
+      router.push('/dashboard/wallet')
     }
   }
 
@@ -26,7 +30,7 @@ const Shareholder = () => {
         <span className='font-semibold text-xl text-warning'>You are Shareholder level {user.shareholderLevel}</span>
       ) : (
         <button onClick={upgradeShareholder} className="btn btn-primary">
-          UPGRAGE LEVEL 1
+          UPGRAGE LEVEL {byShareholderLevelUp}
         </button>
       )}
     </div>

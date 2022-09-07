@@ -17,6 +17,9 @@ interface UserInfo {
   username: string
   firstExchange: boolean
   shareholderLevel: number
+  byShareholder: {
+    shareholderLevel: number
+  }
   role: number
   id: string
 }

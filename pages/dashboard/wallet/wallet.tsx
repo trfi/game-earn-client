@@ -97,7 +97,7 @@ const Wallet: NextPageWithLayout = () => {
               <button className="btn btn-sm">Withdrawal</button>
             </Link>
             <label htmlFor="my-modal-4" className="modal-button btn btn-sm">
-              Chuyển
+              Transfer
             </label>
           </div>
         </div>
@@ -132,7 +132,7 @@ const Wallet: NextPageWithLayout = () => {
               <input
                 type="number"
                 name="amount"
-                className="input input-bordered input-success w-full"
+                className="input input-bordered input-accent w-full"
                 defaultValue={50}
                 min={50}
                 max={1000000}
@@ -149,7 +149,7 @@ const Wallet: NextPageWithLayout = () => {
             <select
               name="payCurrency"
               defaultValue="usdtbsc"
-              className="select select-primary w-full"
+              className="select select-accent w-full"
             >
               <option value="usdtbsc">USDT BSC</option>
             </select>
